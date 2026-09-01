@@ -1,12 +1,11 @@
 import {
-  ArrowUpRight,
+ 
   Mail,
   Phone,
   MapPin,
-  Linkedin,
-  Instagram,
-  Facebook,
-  Github,
+ 
+ 
+  
 } from "lucide-react";
 
 function Footer() {

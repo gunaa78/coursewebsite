@@ -281,6 +281,8 @@ const Navbar = () => {
                   {/* WHY US */}
 
                   <button
+                  
+             
                     type="button"
                     onClick={() => goHomeSection("why")}
                     className="

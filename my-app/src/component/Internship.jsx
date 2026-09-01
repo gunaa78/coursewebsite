@@ -1,10 +1,17 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { useEffect } from "react";
 
 import InternshipApplication from "./InternshipApplication";
 import Collageinternship from "./Collageinternship";
 
 function Internship() {
+
+   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+ 
   const [type, setType] = useState("job");
 
   const titleWords = [
@@ -262,5 +269,6 @@ function Internship() {
     </section>
   );
 }
+
 
 export default Internship;

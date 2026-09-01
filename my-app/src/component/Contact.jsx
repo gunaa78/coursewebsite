@@ -20,6 +20,9 @@ import {
 
 
 function Contact() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const [openFaq, setOpenFaq] = useState(null);
   const [submit, setSubmit] = useState("");
 

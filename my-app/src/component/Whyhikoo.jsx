@@ -25,8 +25,14 @@ const benefits = [
   },
 ];
 
+
 function WhyHikoo() {
+  
+   
+  
   return (
+   
+    
     <section
       id="why"
       className="bg-slate-50 py-16 sm:py-20 lg:py-24"

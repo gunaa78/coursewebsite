@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import api from "./axios";
+import{useEffect} from "react";
 
 import {
   Code2,
@@ -30,6 +31,9 @@ import {
 } from "lucide-react";
 
 function Career() {
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []);
   const [submitSuccess, setSubmitSuccess] = useState("");
   const [selectedRole, setSelectedRole] = useState(null);
   const [showForm, setShowForm] = useState(false);

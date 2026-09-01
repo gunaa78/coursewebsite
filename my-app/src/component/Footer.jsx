@@ -7,8 +7,54 @@ import {
  
   
 } from "lucide-react";
+import { Link} from "react-router-dom";
+import {  useLocation, useNavigate } from "react-router-dom";
+import { useState } from "react";
+ 
 
 function Footer() {
+   const [menuOpen, setMenuOpen] = useState(false);
+     const location = useLocation();
+     const navigate = useNavigate();
+  
+
+  const closeMenu = () => {
+    setMenuOpen(false);
+  };
+
+
+
+  const goHomeSection = (section) => {
+    closeMenu();
+
+    if (location.pathname === "/") {
+      setTimeout(() => {
+        const element = document.getElementById(section);
+
+        if (element) {
+          element.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+        }
+      }, 50);
+
+      return;
+    }
+
+    navigate("/");
+
+    setTimeout(() => {
+      const element = document.getElementById(section);
+
+      if (element) {
+        element.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+    }, 300);
+  };
   return (
     <footer className="bg-slate-950 text-white">
 
@@ -79,49 +125,46 @@ function Footer() {
 
             <div className="space-y-3">
 
-              <a
-                href="/"
+              <button
+                 type="button"
+                    onClick={() => goHomeSection("home")}
                 className="block text-slate-300 hover:text-blue-500 transition"
               >
                 Home
-              </a>
+              </button>
 
-              <p
-                 onClick={() => {
-    document.getElementById("courses")?.scrollIntoView({
-      behavior: "smooth",
-    });
-  }}
+              <Link
+                  type="button"
+                    onClick={() => goHomeSection("courses")}
                 className="block text-slate-300 hover:text-blue-500 transition"
               >
                 Courses
-              </p>
+              </Link>
 
-              <p
-                onClick={() => {
-    document.getElementById("services")?.scrollIntoView({
-      behavior: "smooth",
-    });
-  }}
+              <button
+                 type="button"
+                    onClick={() => goHomeSection("services")}
                 className="block text-slate-300 hover:text-blue-500 transition"
               >
                 Services
-              </p>
+              </button>
 
-              <p
-                 onClick={() => {
-    document.getElementById("why")?.scrollIntoView({
-      behavior: "smooth",
-    });
-  }}
+              <button
+              type="button"
+                    onClick={() => goHomeSection("why")}
+  
+            
+             
+                 
                 className="block text-slate-300 hover:text-blue-500 transition"
               >
                 Why Us
-              </p>
+              </button>
 
-              <p
+              <Link
+               to="/intern"
               onClick={() => {
-    document.getElementById("internship")?.scrollIntoView({
+    document.getElementById("intern")?.scrollIntoView({
       behavior: "smooth",
     });
   }}
@@ -129,9 +172,11 @@ function Footer() {
                 className="block text-slate-300 hover:text-blue-500 transition"
               >
                  Internship
-              </p>
+              </Link>
 
-<p
+<Link
+  to="/career"
+
                  onClick={() => {
     document.getElementById("career")?.scrollIntoView({
       behavior: "smooth",
@@ -140,10 +185,11 @@ function Footer() {
                 className="block text-slate-300 hover:text-blue-500 transition"
               >
                  Career
-              </p>
+              </Link>
 
 
-              <p
+              <Link
+                to="/contact"
                 onClick={() => {
     document.getElementById("contact")?.scrollIntoView({
       behavior: "smooth",
@@ -152,7 +198,7 @@ function Footer() {
                 className="block text-slate-300 hover:text-blue-500 transition"
               >
                  Contact
-              </p>
+              </Link>
             </div>
 
           </div>
@@ -248,7 +294,7 @@ function Footer() {
               {/* PHONE */}
 
               <a
-                href="tel:+91XXXXXXXXXX"
+                href="tel:+91 7598639009"
                 className="
                   flex
                   items-start

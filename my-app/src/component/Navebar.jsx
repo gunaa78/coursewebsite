@@ -72,10 +72,10 @@ const Navbar = () => {
   // INTERNSHIP
   // =====================================================
 
-  const goInternship = () => {
-    closeMenu();
-    navigate("/internship");
-  };
+  // const goInternship = () => {
+  //   closeMenu();
+  //   navigate("/internship");
+  // };
 
   // =====================================================
   // ACTIVE ROUTE

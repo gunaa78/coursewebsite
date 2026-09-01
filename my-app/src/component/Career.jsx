@@ -15,8 +15,8 @@ import {
   Briefcase,
   Clock3,
   ArrowRight,
-  GraduationCap,
-  Check,
+ 
+ 
   ArrowUpRight,
   Users,
   Rocket,

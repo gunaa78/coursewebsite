@@ -781,26 +781,79 @@ const Navbar = () => {
 
                 <div className="mt-4">
 
-                  <button
-                    type="button"
-                    onClick={() => goHomeSection("enroll")}
-                    className="
-                      w-full
-                      py-3.5
-                      rounded-xl
-                      bg-gradient-to-r
-                      from-blue-600
-                      to-indigo-600
-                      text-white
-                      font-bold
-                      shadow-lg
-                      shadow-blue-600/20
-                      hover:shadow-blue-600/30
-                      transition-all
-                    "
-                  >
-                    Enroll Now →
-                  </button>
+                <Link
+  to="/contact#enroll"
+  onClick={() => {
+      closeMenu();
+    setTimeout(() => {
+      const element = document.getElementById("enroll");
+
+      if (element) {
+        element.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+    }, 100);
+  }}
+  // onClick={closeMenu}
+  className="
+    group
+    relative
+    flex
+    items-center
+    justify-center
+    gap-2
+    w-full
+    px-5
+    py-3
+    rounded-xl
+    bg-gradient-to-r
+    from-blue-600
+    to-indigo-600
+    text-white
+    text-sm
+    font-bold
+    shadow-lg
+    shadow-blue-600/20
+    hover:shadow-blue-600/35
+    hover:-translate-y-0.5
+    transition-all
+    duration-300
+    overflow-hidden
+  "
+>
+  <span className="relative z-10">
+    Enroll Now
+  </span>
+
+  <span
+    className="
+      relative
+      z-10
+      text-lg
+      group-hover:translate-x-1
+      transition-transform
+    "
+  >
+    →
+  </span>
+
+  <span
+    className="
+      absolute
+      inset-0
+      -translate-x-full
+      group-hover:translate-x-full
+      transition-transform
+      duration-700
+      bg-gradient-to-r
+      from-transparent
+      via-white/20
+      to-transparent
+    "
+  />
+</Link>
 
                 </div>
 

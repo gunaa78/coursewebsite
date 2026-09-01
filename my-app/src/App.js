@@ -4,7 +4,7 @@ import Courses from "./component/Courses";
 import Services from "./component/Services";
 import Whyhikoo from "./component/Whyhikoo";
 import Internship from "./component/Internship";
-// import InternshipApplication from "./component/InternshipApplication";
+
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 // import { Contact } from "lucide-react";

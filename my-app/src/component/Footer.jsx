@@ -9,41 +9,23 @@ import {
 } from "lucide-react";
 import { Link} from "react-router-dom";
 import {  useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
+// import { useState } from "react";
  
 
 function Footer() {
-   const [menuOpen, setMenuOpen] = useState(false);
+  //  const [menuOpen, setMenuOpen] = useState(false);
      const location = useLocation();
      const navigate = useNavigate();
   
 
-  const closeMenu = () => {
-    setMenuOpen(false);
-  };
+  // const closeMenu = () => {
+  //   setMenuOpen(false);
+  // };
 
 
 
   const goHomeSection = (section) => {
-    closeMenu();
-
-    if (location.pathname === "/") {
-      setTimeout(() => {
-        const element = document.getElementById(section);
-
-        if (element) {
-          element.scrollIntoView({
-            behavior: "smooth",
-            block: "start",
-          });
-        }
-      }, 50);
-
-      return;
-    }
-
-    navigate("/");
-
+  if (location.pathname === "/") {
     setTimeout(() => {
       const element = document.getElementById(section);
 
@@ -53,8 +35,24 @@ function Footer() {
           block: "start",
         });
       }
-    }, 300);
-  };
+    }, 50);
+
+    return;
+  }
+
+  navigate("/");
+
+  setTimeout(() => {
+    const element = document.getElementById(section);
+
+    if (element) {
+      element.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  }, 300);
+};
   return (
     <footer className="bg-slate-950 text-white">
 
@@ -133,13 +131,13 @@ function Footer() {
                 Home
               </button>
 
-              <Link
+              <button
                   type="button"
                     onClick={() => goHomeSection("courses")}
                 className="block text-slate-300 hover:text-blue-500 transition"
               >
                 Courses
-              </Link>
+              </button>
 
               <button
                  type="button"

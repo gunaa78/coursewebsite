@@ -1,43 +1,16 @@
-
-
 const express = require("express");
-const multer = require("multer");
 
 const {
- createJobOpening ,
-  getJobOpenings
+  createJobOpening,
+  getJobOpenings,
 } = require("../controllers/jobOpeningController");
+
+const upload = require("../middleware/upload");
 
 const router = express.Router();
 
-
 // ==============================
-// MULTER STORAGE
-// ==============================
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads/");
-  },
-
-  filename: (req, file, cb) => {
-    const fileName =
-      Date.now() +
-      "-" +
-      file.originalname.replace(/\s+/g, "-");
-
-    cb(null, fileName);
-  },
-});
-
-
-const upload = multer({
-  storage,
-});
-
-
-// ==============================
-// POST JOB INTERNSHIP
+// POST JOB APPLICATION
 // ==============================
 
 router.post(
@@ -46,17 +19,13 @@ router.post(
   createJobOpening
 );
 
-
 // ==============================
-// GET JOB INTERNSHIP
+// GET JOB APPLICATIONS
 // ==============================
 
 router.get(
   "/",
   getJobOpenings
- 
 );
 
-
-module.exports = router;
 module.exports = router;

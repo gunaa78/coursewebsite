@@ -16,9 +16,10 @@ const createCollegeInternship = async (req, res) => {
 
     // Upload resume to Cloudinary
     const cloudinaryResult = await uploadToCloudinary(
-      req.file.buffer,
-      req.file.originalname
-    );
+  req.file.buffer,
+  req.file.originalname,
+  "hikoo/college-internships/resumes"
+);
 
     console.log("CLOUDINARY URL:", cloudinaryResult.secure_url);
 

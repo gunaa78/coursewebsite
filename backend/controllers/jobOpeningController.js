@@ -53,7 +53,7 @@ const createJobOpening = async (req, res) => {
     const cloudinaryResult = await uploadToCloudinary(
   req.file.buffer,
   req.file.originalname,
-  "hikoo/job-internships/resumes"
+  "hikoo/job-applications/resumes"
 );
 
 

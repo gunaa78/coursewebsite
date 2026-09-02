@@ -1340,16 +1340,17 @@ data.append("message", formData.message);
                 />
 
               </button>
-
-            </div>
-
-          </div>
-           {submit && (
+               {submit && (
   <p className="text-green-600 font-semibold text-center mt-4">
     ✓ {submit}
   </p>
 )}
 
+
+            </div>
+
+          </div>
+          
         </form>
 
       </div>

@@ -1,5 +1,4 @@
 const express = require("express");
-
 const router = express.Router();
 
 const {
@@ -7,7 +6,6 @@ const {
   getCollegeInternships,
 } = require("../controllers/collegeInternshipController");
 
-// POST - College Internship Application
 const upload = require("../middleware/upload");
 
 router.post(
@@ -16,7 +14,6 @@ router.post(
   createCollegeInternship
 );
 
-// GET - All College Internship Applications
 router.get("/", getCollegeInternships);
 
 module.exports = router;

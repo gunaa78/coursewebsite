@@ -44,10 +44,10 @@ app.use(
 // UPLOADS
 // ==============================
 
-app.use(
-  "/uploads",
-  express.static("uploads")
-);
+// app.use(
+//   "/uploads",
+//   express.static("uploads")
+// );
 
 
 // ==============================

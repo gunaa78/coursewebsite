@@ -66,9 +66,27 @@ function Collageinternship() {
     data.append("startDate", formData.startDate);
     data.append("message", formData.message);
 
-    // Resume file
-    if (formData.resume) {
-      data.append("resume", formData.resume);
+    // // Resume
+    if (!formData.resume) {
+      alert("Please upload your resume");
+      return;
+    }
+
+    data.append("resume", formData.resume);
+
+    console.log("SUBMIT STARTED");
+    // console.log(
+    //   "API URL:",
+    //   "https://coursewebsite-xw4b.onrender.com/api/college-internships"
+    // );
+
+
+    
+    
+
+    // Check FormData
+    for (const [key, value] of data.entries()) {
+      console.log(key, value);
     }
 
     const response = await api.post(
@@ -77,6 +95,7 @@ function Collageinternship() {
     );
 
     console.log("API RESPONSE:", response.data);
+
     setSubmitSuccess(
       "College Internship Application Submitted Successfully!"
     );
@@ -95,21 +114,26 @@ function Collageinternship() {
       resume: null,
       message: "",
     });
-
   } catch (error) {
-    console.error("Submit Error:", error);
+    console.log("========== SUBMIT ERROR ==========");
 
-    console.log(
-      "ERROR RESPONSE:",
-      error.response?.data
-    );
+    console.log("FULL ERROR:", error);
+    console.log("ERROR MESSAGE:", error.message);
+    console.log("ERROR STATUS:", error.response?.status);
+    console.log("ERROR DATA:", error.response?.data);
+    console.log("ERROR URL:", error.config?.url);
 
     alert(
       error.response?.data?.message ||
-      "Unable to connect to server"
+      error.message ||
+      "Unknown error"
     );
   }
 };
+
+  
+  
+
   // const domains = [
   //   {
   //     title: "Web Development",
@@ -1525,7 +1549,8 @@ function Collageinternship() {
 
       {/* RESUME UPLOAD */}
 
-        <label
+      
+  <label
   className="
     group
     block
@@ -1652,7 +1677,6 @@ function Collageinternship() {
     Maximum file size: 5MB
   </p>
  </label> 
-
 
       {/* MESSAGE */}
 

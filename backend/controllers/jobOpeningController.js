@@ -1,4 +1,5 @@
 const JobApplication = require("../models/JobOpening");
+const uploadToCloudinary = require("../utils/uploadToCloudinary");
 
 // =====================================================
 // CREATE JOB OPENING / APPLICATION
@@ -49,6 +50,16 @@ const createJobOpening = async (req, res) => {
       });
     }
 
+    const cloudinaryResult = await uploadToCloudinary(
+          req.file.buffer,
+          req.file.originalname
+        );
+
+
+
+
+    
+
     // =====================================================
     // CREATE APPLICATION
     // =====================================================
@@ -61,7 +72,7 @@ const createJobOpening = async (req, res) => {
       college,
       experience,
       location,
-      resume: req.file.filename,
+      resume: cloudinaryResult.secure_url,
       message,
       status: "Pending",
     });

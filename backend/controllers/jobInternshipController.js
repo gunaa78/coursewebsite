@@ -1,7 +1,6 @@
 const JobInternship = require("../models/JobInternship");
 const uploadToCloudinary = require("../utils/uploadToCloudinary");
 
-
 // CREATE JOB INTERNSHIP APPLICATION
 const createJobInternship = async (req, res) => {
   try {
@@ -41,9 +40,10 @@ const createJobInternship = async (req, res) => {
       "hikoo/job-internships/resumes"
     );
 
-    
-    
-    
+    console.log(
+      "☁️ CLOUDINARY URL:",
+      cloudinaryResult.secure_url
+    );
 
     const application = new JobInternship({
       name,
@@ -67,32 +67,24 @@ const createJobInternship = async (req, res) => {
 
     const savedApplication = await application.save();
 
-    console.log(
-      "✅ JOB INTERNSHIP SAVED:",
-      savedApplication
-    );
+    console.log("✅ JOB INTERNSHIP SAVED:", savedApplication);
 
     res.status(201).json({
       success: true,
-      message:
-        "Job Internship application submitted successfully",
+      message: "Job Internship application submitted successfully",
       data: savedApplication,
     });
+
   } catch (error) {
-    console.error(
-      "❌ JOB INTERNSHIP ERROR:",
-      error
-    );
+    console.error("❌ JOB INTERNSHIP ERROR:", error);
 
     res.status(500).json({
       success: false,
-      message:
-        "Failed to submit Job Internship application",
+      message: "Failed to submit Job Internship application",
       error: error.message,
     });
   }
 };
-
 
 // GET ALL JOB INTERNSHIP APPLICATIONS
 const getJobInternships = async (req, res) => {
@@ -104,21 +96,17 @@ const getJobInternships = async (req, res) => {
       success: true,
       data: applications,
     });
+
   } catch (error) {
-    console.error(
-      "❌ FETCH JOB INTERNSHIP ERROR:",
-      error
-    );
+    console.error("❌ FETCH JOB INTERNSHIP ERROR:", error);
 
     res.status(500).json({
       success: false,
-      message:
-        "Failed to fetch Job Internship applications",
+      message: "Failed to fetch Job Internship applications",
       error: error.message,
     });
   }
 };
-
 
 module.exports = {
   createJobInternship,

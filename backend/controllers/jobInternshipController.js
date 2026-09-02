@@ -1,4 +1,5 @@
 const JobInternship = require("../models/JobInternship");
+const uploadToCloudinary = require("../utils/uploadToCloudinary");
 
 
 // CREATE JOB INTERNSHIP APPLICATION

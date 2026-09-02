@@ -26,6 +26,24 @@ const createJobInternship = async (req, res) => {
       message,
     } = req.body;
 
+    if (!req.file) {
+      return res.status(400).json({
+        success: false,
+        message: "Please upload your resume",
+      });
+    }
+
+    // Upload resume to Cloudinary
+    const cloudinaryResult = await uploadToCloudinary(
+      req.file.buffer,
+      req.file.originalname,
+      "hikoo/job-internships/resumes"
+    );
+
+    
+    
+    
+
     const application = new JobInternship({
       name,
       email,
@@ -42,7 +60,7 @@ const createJobInternship = async (req, res) => {
       duration,
       startDate,
       noticePeriod,
-      resume: req.file ? req.file.filename : "",
+      resume: cloudinaryResult.secure_url,
       message,
     });
 

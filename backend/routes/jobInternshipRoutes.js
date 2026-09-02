@@ -8,31 +8,15 @@ const {
 
 const router = express.Router();
 
-
 // ==============================
-// MULTER STORAGE
+// MULTER MEMORY STORAGE
 // ==============================
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads/");
-  },
-
-  filename: (req, file, cb) => {
-    const fileName =
-      Date.now() +
-      "-" +
-      file.originalname.replace(/\s+/g, "-");
-
-    cb(null, fileName);
-  },
-});
-
+const storage = multer.memoryStorage();
 
 const upload = multer({
-  storage,
+  storage: storage,
 });
-
 
 // ==============================
 // POST JOB INTERNSHIP
@@ -44,7 +28,6 @@ router.post(
   createJobInternship
 );
 
-
 // ==============================
 // GET JOB INTERNSHIP
 // ==============================
@@ -54,6 +37,8 @@ router.get(
   getJobInternships
 );
 
+// ==============================
+// EXPORT
+// ==============================
 
-module.exports = router;
 module.exports = router;

@@ -1,7 +1,7 @@
 const courseCategories = [
   {
-    icon: "🤖",
     title: "Artificial Intelligence",
+    icon: "🤖",
     courses: [
       "Generative AI (Gen AI)",
       "Agentic AI",
@@ -14,8 +14,8 @@ const courseCategories = [
   },
 
   {
-    icon: "📊",
     title: "Data Science",
+    icon: "📊",
     courses: [
       "Data Engineering",
       "MLOps Engineering",
@@ -26,13 +26,13 @@ const courseCategories = [
   },
 
   {
-    icon: "💻",
     title: "Web Development with AI",
+    icon: "💻",
     courses: [
       "Java Fullstack",
       "Python Fullstack",
       "PHP Fullstack",
-      ".NET Fullstack",
+      ".Net Fullstack",
       "Ruby on Rails Fullstack",
       "JavaScript Fullstack",
       "React / Angular / Vue",
@@ -40,8 +40,8 @@ const courseCategories = [
   },
 
   {
-    icon: "📱",
     title: "Mobile / Web App Development",
+    icon: "📱",
     courses: [
       "Android",
       "iOS",
@@ -53,19 +53,19 @@ const courseCategories = [
   },
 
   {
-    icon: "☁️",
     title: "Cloud Computing",
+    icon: "☁️",
     courses: [
       "AWS",
-      "Azure",
+      "AZURE",
       "GCP (Google Cloud)",
-      "Oracle Cloud",
+      "ORACLE Cloud",
     ],
   },
 
   {
-    icon: "🔐",
     title: "Cyber Security",
+    icon: "🔐",
     courses: [
       "Cyber Security Analyst",
       "SOC Analysis",
@@ -80,8 +80,8 @@ const courseCategories = [
   },
 
   {
-    icon: "🧪",
     title: "Software Testing",
+    icon: "🧪",
     courses: [
       "Manual Testing / Agile",
       "Automation Testing / Selenium",
@@ -95,8 +95,8 @@ const courseCategories = [
   },
 
   {
-    icon: "📣",
     title: "Digital Marketing",
+    icon: "📣",
     courses: [
       "Search Engine Optimization (SEO)",
       "Search Engine Marketing (SEM)",
@@ -111,8 +111,8 @@ const courseCategories = [
   },
 
   {
-    icon: "🏗️",
     title: "Software Architecture Engineering",
+    icon: "🏗️",
     courses: [
       "Business Architecture",
       "Enterprise Architecture",
@@ -126,8 +126,8 @@ const courseCategories = [
   },
 
   {
-    icon: "🎮",
     title: "Game Development",
+    icon: "🎮",
     courses: [
       "Unity",
       "Unreal Engine",
@@ -137,19 +137,19 @@ const courseCategories = [
   },
 
   {
-    icon: "🗣️",
     title: "English Language",
+    icon: "🗣️",
     courses: [
       "Communicative English",
-      "Advanced English",
+      "Advance English",
+      "Business English",
+      "IELTS",
     ],
   },
 
-  // ================= NEW =================
-
   {
-    icon: "🎨",
     title: "Graphic Design & UI/UX",
+    icon: "🎨",
     courses: [
       "UI / UX Design",
       "Logo / Branding Design",
@@ -160,8 +160,8 @@ const courseCategories = [
   },
 
   {
-    icon: "🧾",
     title: "Tally & Accounting",
+    icon: "🧾",
     courses: [
       "Tally",
       "Inventory Management System",

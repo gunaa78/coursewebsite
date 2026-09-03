@@ -259,28 +259,28 @@ function Courses() {
     "Understand GST concepts, taxation workflows, compliance basics and practical business tax processes.",
 };
   
-  const courseScrollRef = useRef(null);
+  // const courseScrollRef = useRef(null);
 
-const scrollCourses = (direction) => {
-  if (!courseScrollRef.current) return;
+// const scrollCourses = (direction) => {
+//   if (!courseScrollRef.current) return;
 
-  const container = courseScrollRef.current;
+//   const container = courseScrollRef.current;
 
-  const card = container.querySelector(".course-category-card");
+//   const card = container.querySelector(".course-category-card");
 
-  if (!card) return;
+//   if (!card) return;
 
-  const cardWidth = card.offsetWidth;
-  const gap = 28;
+//   const cardWidth = card.offsetWidth;
+//   const gap = 28;
 
-  // 3 cards move
-  const amount = (cardWidth + gap) * 3;
+//   // 3 cards move
+//   const amount = (cardWidth + gap) * 3;
 
-  container.scrollBy({
-    left: direction === "right" ? amount : -amount,
-    behavior: "smooth",
-  });
-};
+//   container.scrollBy({
+//     left: direction === "right" ? amount : -amount,
+//     behavior: "smooth",
+//   });
+// };
  
   const [selectedCourse, setSelectedCourse] = useState(null);
   const details = selectedCourse

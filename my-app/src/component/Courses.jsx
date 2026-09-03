@@ -1,7 +1,7 @@
 import courseCategories from "./courseCategories";
 import { useState } from "react";
 import courseDetails from "./courseDetails";
-import { useRef } from "react";
+// import { useRef } from "react";
 import { Link} from "react-router-dom";
 import {
   X,

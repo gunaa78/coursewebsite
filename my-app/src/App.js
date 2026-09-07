@@ -28,8 +28,8 @@ function App() {
             element={
               <>
                 <Home />
-                <Courses />
-                <Services />
+                {/* <Courses /> */}
+                {/* <Services /> */}
                 <Whyhikoo />
                 {/* <Internship /> */}
                 {/* <Career /> */}
@@ -51,6 +51,8 @@ function App() {
            <Route path="/career" element={<Career />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/intern" element={<Internship />} />
+            <Route path="/Courses" element={<Courses />} />
+            <Route path="/Services" element={<Services />} />
 
 
          

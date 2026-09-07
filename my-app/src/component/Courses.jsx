@@ -326,6 +326,8 @@ function Courses() {
         py-20
         sm:py-24
         lg:py-28
+          mt-20
+    sm:mt-24
       "
     >
       {/* =====================================================
@@ -480,7 +482,7 @@ function Courses() {
 
     <p
       className="
-        text-xs
+        text-xs  
         sm:text-sm
         font-semibold
         text-blue-600
@@ -498,7 +500,7 @@ function Courses() {
         lg:text-4xl
         font-bold
         text-slate-900
-        mt-1
+        mt-1 
       "
     >
       Choose Your Learning Path

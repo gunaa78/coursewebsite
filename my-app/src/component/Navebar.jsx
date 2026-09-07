@@ -238,9 +238,11 @@ const Navbar = () => {
 
                   {/* COURSES */}
 
-                  <button
+                  <Link
+                  to="/Courses"
                     type="button"
-                    onClick={() => goHomeSection("courses")}
+                     onClick={closeMenu}
+                    // onClick={() => goHomeSection("courses")}
                     className="
                       px-3.5
                       py-2.5
@@ -255,13 +257,15 @@ const Navbar = () => {
                     "
                   >
                     Courses
-                  </button>
+                  </Link>
 
                   {/* SERVICES */}
 
-                  <button
+                  <Link
+                  to="/services"
                     type="button"
-                    onClick={() => goHomeSection("services")}
+                    // onClick={() => goHomeSection("services")}
+                     onClick={closeMenu}
                     className="
                       px-3.5
                       py-2.5
@@ -276,7 +280,7 @@ const Navbar = () => {
                     "
                   >
                     Services
-                  </button>
+                  </Link>
 
                   {/* WHY US */}
 
@@ -624,9 +628,11 @@ const Navbar = () => {
 
                   {/* COURSES */}
 
-                  <button
-                    type="button"
-                    onClick={() => goHomeSection("courses")}
+                  <Link
+                    to="/Courses"
+                     onClick={closeMenu}
+                  
+                    // onClick={() => goHomeSection("courses")}
                     className="
                       text-left
                       px-4
@@ -641,13 +647,13 @@ const Navbar = () => {
                     "
                   >
                     Courses
-                  </button>
+                  </Link>
 
                   {/* SERVICES */}
 
-                  <button
-                    type="button"
-                    onClick={() => goHomeSection("services")}
+                  <Link
+                    to="/services"
+                     onClick={closeMenu}
                     className="
                       text-left
                       px-4
@@ -662,7 +668,7 @@ const Navbar = () => {
                     "
                   >
                     Services
-                  </button>
+                  </Link>
 
                   {/* WHY US */}
 

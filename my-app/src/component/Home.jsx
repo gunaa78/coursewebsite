@@ -227,7 +227,7 @@ function Home() {
                 duration-300
               "
             >
-              Get Started
+              Explore Services →
             </Link>
           </div>
 

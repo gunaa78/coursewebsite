@@ -167,8 +167,22 @@ function Home() {
               gap-3
             "
           >
-            <a
-              href="#courses"
+            <Link
+
+             to="/Courses#courses"
+                onClick={() => {
+    setTimeout(() => {
+      const element = document.getElementById("courses");
+
+      if (element) {
+        element.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+    }, 100);
+  }}
+              // href="#courses"
               className="
                 w-full
                 sm:w-auto
@@ -189,13 +203,14 @@ function Home() {
               "
             >
               Explore Courses →
-            </a>
+            </Link>
 
             <Link
-             to="/contact#enroll"
+  //            to="/contact#enroll"
+   to="/services#services"
                 onClick={() => {
     setTimeout(() => {
-      const element = document.getElementById("enroll");
+      const element = document.getElementById("services");
 
       if (element) {
         element.scrollIntoView({
@@ -205,8 +220,9 @@ function Home() {
       }
     }, 100);
   }}
+ 
 
-              href="#contact"
+              // href="#contact"
               className="
                 w-full
                 sm:w-auto

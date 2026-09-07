@@ -234,9 +234,9 @@ function WhyHikoo() {
               duration-300
             "
           >
-            <span>LEARN MORE</span>
+            {/* <span>LEARN MORE</span> */}
 
-            <span
+            {/* <span
               className="
                 text-base
                 sm:group-hover:translate-x-1
@@ -244,7 +244,7 @@ function WhyHikoo() {
               "
             >
               →
-            </span>
+            </span> */}
           </div>
 
         </div>

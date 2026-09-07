@@ -354,7 +354,7 @@ function Contact() {
             {/* EMAIL */}
 
             <motion.a
-              href="https://mail.google.com/mail/?view=cm&fs=1&to=hikootechnology@gmail.com"
+              href="https://mail.google.com/mail/?view=cm&fs=1&to=contact@hikoo.in"
               target="_blank"
               rel="noopener noreferrer"
               initial={{ opacity: 0, y: 30 }}
@@ -375,7 +375,7 @@ function Contact() {
               </p>
 
               <h3 className="text-lg font-bold mt-2 break-all">
-                hikootechnology@gmail.com
+                contact@hikoo.in
               </h3>
 
               <p className="text-sm text-slate-500 mt-2">

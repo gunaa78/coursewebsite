@@ -67,7 +67,7 @@ function Footer() {
           <div className="lg:col-span-5">
 
             <h2 className="text-3xl font-bold tracking-tight">
-              HIKOO
+              HIKOO TECHNOLOGY
               <span className="text-blue-500">.</span>
             </h2>
 
@@ -265,7 +265,7 @@ function Footer() {
               {/* EMAIL */}
 
               <a
-                href="https://mail.google.com/mail/?view=cm&fs=1&to=hikootechnology@gmail.com"
+                href="https://mail.google.com/mail/?view=cm&fs=1&to=contact@hikoo.in"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="
@@ -283,7 +283,7 @@ function Footer() {
                 />
 
                 <span>
-                  hikootechnology@gmail.com
+                  contact@hikoo.in
                 </span>
 
               </a>

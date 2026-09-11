@@ -330,10 +330,7 @@ function Courses() {
     sm:mt-24
       "
     >
-      {/* =====================================================
-          BACKGROUND
-      ===================================================== */}
-
+     
       <div className="absolute inset-0 pointer-events-none">
         {/* Blue Glow */}
 
@@ -1775,10 +1772,7 @@ function Courses() {
           </div>
 
 
-          {/* =================================================
-              COURSE-SPECIFIC LEARNING
-          ================================================= */}
-
+        
           <div
             className="
               mt-6

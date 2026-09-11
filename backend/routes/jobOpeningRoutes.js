@@ -28,4 +28,4 @@ router.get(
   getJobOpenings
 );
 
-module.exports = router;
+module.exports = router;  

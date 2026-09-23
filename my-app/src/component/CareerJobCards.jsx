@@ -12,7 +12,7 @@ import {
   Pencil,
   Trash2,
   Lock,
-  X,
+
 } from "lucide-react";
 
 function CareerJobCards({

@@ -1,12 +1,19 @@
-const CollegeInternship = require("../models/CollegeInternship");
-const uploadToCloudinary = require("../utils/uploadToCloudinary");
+import CollegeInternship from "../models/CollegeInternship.js";
+import uploadToCloudinary from "../utils/uploadToCloudinary.js";
 
-const createCollegeInternship = async (req, res) => {
+
+// =========================================================
+// CREATE COLLEGE INTERNSHIP
+// =========================================================
+
+export const createCollegeInternship = async (req, res) => {
   try {
     console.log("========== COLLEGE INTERNSHIP ==========");
+
     console.log("BODY:", req.body);
     console.log("FILE:", req.file);
 
+    // Check resume
     if (!req.file) {
       return res.status(400).json({
         success: false,
@@ -14,16 +21,25 @@ const createCollegeInternship = async (req, res) => {
       });
     }
 
-    // Upload resume to Cloudinary
+    // =====================================================
+    // UPLOAD RESUME TO CLOUDINARY
+    // =====================================================
+
     const cloudinaryResult = await uploadToCloudinary(
-  req.file.buffer,
-  req.file.originalname,
-  "hikoo/college-internships/resumes"
-);
+      req.file.buffer,
+      req.file.originalname,
+      "hikoo/college-internships/resumes"
+    );
 
-    console.log("CLOUDINARY URL:", cloudinaryResult.secure_url);
+    console.log(
+      "CLOUDINARY URL:",
+      cloudinaryResult.secure_url
+    );
 
-    // Save application + Cloudinary URL to MongoDB
+    // =====================================================
+    // SAVE APPLICATION TO MONGODB
+    // =====================================================
+
     const application = new CollegeInternship({
       name: req.body.name,
       email: req.body.email,
@@ -37,21 +53,33 @@ const createCollegeInternship = async (req, res) => {
       startDate: req.body.startDate || "",
       message: req.body.message || "",
 
+      // Cloudinary resume URL
       resume: cloudinaryResult.secure_url,
     });
 
     const savedApplication = await application.save();
 
-    console.log("MongoDB Saved:", savedApplication._id);
+    console.log(
+      "MongoDB Saved:",
+      savedApplication._id
+    );
+
+    // =====================================================
+    // SUCCESS RESPONSE
+    // =====================================================
 
     return res.status(201).json({
       success: true,
-      message: "College Internship Application Submitted Successfully",
+      message:
+        "College Internship Application Submitted Successfully",
       data: savedApplication,
     });
 
   } catch (error) {
-    console.error("========== COLLEGE INTERNSHIP ERROR ==========");
+    console.error(
+      "========== COLLEGE INTERNSHIP ERROR =========="
+    );
+
     console.error(error);
 
     return res.status(500).json({
@@ -62,29 +90,30 @@ const createCollegeInternship = async (req, res) => {
 };
 
 
-const getCollegeInternships = async (req, res) => {
+// =========================================================
+// GET COLLEGE INTERNSHIPS
+// =========================================================
+
+export const getCollegeInternships = async (req, res) => {
   try {
     const applications = await CollegeInternship.find()
       .sort({ createdAt: -1 });
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       count: applications.length,
       data: applications,
     });
 
   } catch (error) {
-    console.error(error);
+    console.error(
+      "Get College Internships Error:",
+      error
+    );
 
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: error.message,
     });
   }
-};
-
-
-module.exports = {
-  createCollegeInternship,
-  getCollegeInternships,
 };

@@ -1,9 +1,15 @@
-const JobInternship = require("../models/JobInternship");
-const uploadToCloudinary = require("../utils/uploadToCloudinary");
+import JobInternship from "../models/JobInternship.js";
+import uploadToCloudinary from "../utils/uploadToCloudinary.js";
 
+
+// =========================================================
 // CREATE JOB INTERNSHIP APPLICATION
-const createJobInternship = async (req, res) => {
+// =========================================================
+
+export const createJobInternship = async (req, res) => {
   try {
+    console.log("========== JOB INTERNSHIP ==========");
+
     console.log("📥 JOB INTERNSHIP DATA:", req.body);
     console.log("📄 RESUME:", req.file);
 
@@ -26,6 +32,11 @@ const createJobInternship = async (req, res) => {
       message,
     } = req.body;
 
+
+    // =====================================================
+    // CHECK RESUME
+    // =====================================================
+
     if (!req.file) {
       return res.status(400).json({
         success: false,
@@ -33,17 +44,27 @@ const createJobInternship = async (req, res) => {
       });
     }
 
-    // Upload resume to Cloudinary
+
+    // =====================================================
+    // UPLOAD RESUME TO CLOUDINARY
+    // =====================================================
+
     const cloudinaryResult = await uploadToCloudinary(
       req.file.buffer,
       req.file.originalname,
       "hikoo/job-internships/resumes"
     );
 
+
     console.log(
       "☁️ CLOUDINARY URL:",
       cloudinaryResult.secure_url
     );
+
+
+    // =====================================================
+    // SAVE TO MONGODB
+    // =====================================================
 
     const application = new JobInternship({
       name,
@@ -65,50 +86,74 @@ const createJobInternship = async (req, res) => {
       message,
     });
 
+
     const savedApplication = await application.save();
 
-    console.log("✅ JOB INTERNSHIP SAVED:", savedApplication);
 
-    res.status(201).json({
+    console.log(
+      "✅ JOB INTERNSHIP SAVED:",
+      savedApplication._id
+    );
+
+
+    // =====================================================
+    // SUCCESS RESPONSE
+    // =====================================================
+
+    return res.status(201).json({
       success: true,
-      message: "Job Internship application submitted successfully",
+      message:
+        "Job Internship application submitted successfully",
       data: savedApplication,
     });
 
   } catch (error) {
-    console.error("❌ JOB INTERNSHIP ERROR:", error);
 
-    res.status(500).json({
+    console.error(
+      "========== JOB INTERNSHIP ERROR =========="
+    );
+
+    console.error(error);
+
+    return res.status(500).json({
       success: false,
-      message: "Failed to submit Job Internship application",
+      message:
+        "Failed to submit Job Internship application",
       error: error.message,
     });
   }
 };
 
+
+// =========================================================
 // GET ALL JOB INTERNSHIP APPLICATIONS
-const getJobInternships = async (req, res) => {
+// =========================================================
+
+export const getJobInternships = async (req, res) => {
   try {
+
     const applications = await JobInternship.find()
       .sort({ createdAt: -1 });
 
-    res.status(200).json({
+
+    return res.status(200).json({
       success: true,
+      count: applications.length,
       data: applications,
     });
 
   } catch (error) {
-    console.error("❌ FETCH JOB INTERNSHIP ERROR:", error);
 
-    res.status(500).json({
+    console.error(
+      "❌ FETCH JOB INTERNSHIP ERROR:",
+      error
+    );
+
+    return res.status(500).json({
       success: false,
-      message: "Failed to fetch Job Internship applications",
+      message:
+        "Failed to fetch Job Internship applications",
       error: error.message,
     });
   }
-};
-
-module.exports = {
-  createJobInternship,
-  getJobInternships,
 };

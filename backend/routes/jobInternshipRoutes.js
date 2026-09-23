@@ -1,26 +1,26 @@
-const express = require("express");
-const multer = require("multer");
+import express from "express";
+import multer from "multer";
 
-const {
+import {
   createJobInternship,
   getJobInternships,
-} = require("../controllers/jobInternshipController");
+} from "../controllers/jobInternshipController.js";
 
 const router = express.Router();
 
-// ==============================
+// =========================================================
 // MULTER MEMORY STORAGE
-// ==============================
+// =========================================================
 
 const storage = multer.memoryStorage();
 
 const upload = multer({
-  storage: storage,
+  storage,
 });
 
-// ==============================
+// =========================================================
 // POST JOB INTERNSHIP
-// ==============================
+// =========================================================
 
 router.post(
   "/",
@@ -28,17 +28,17 @@ router.post(
   createJobInternship
 );
 
-// ==============================
+// =========================================================
 // GET JOB INTERNSHIP
-// ==============================
+// =========================================================
 
 router.get(
   "/",
   getJobInternships
 );
 
-// ==============================
+// =========================================================
 // EXPORT
-// ==============================
+// =========================================================
 
-module.exports = router;
+export default router;

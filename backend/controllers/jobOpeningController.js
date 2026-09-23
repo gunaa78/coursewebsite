@@ -21,10 +21,7 @@ const createJobOpening = async (req, res) => {
       message,
     } = req.body;
 
-    // =====================================================
     // REQUIRED FIELD VALIDATION
-    // =====================================================
-
     if (
       !jobName ||
       !name ||
@@ -39,10 +36,7 @@ const createJobOpening = async (req, res) => {
       });
     }
 
-    // =====================================================
     // RESUME VALIDATION
-    // =====================================================
-
     if (!req.file) {
       return res.status(400).json({
         success: false,
@@ -50,21 +44,14 @@ const createJobOpening = async (req, res) => {
       });
     }
 
+    // UPLOAD RESUME TO CLOUDINARY
     const cloudinaryResult = await uploadToCloudinary(
-  req.file.buffer,
-  req.file.originalname,
-  "hikoo/job-applications/resumes"
-);
+      req.file.buffer,
+      req.file.originalname,
+      "hikoo/job-applications/resumes"
+    );
 
-
-
-
-    
-
-    // =====================================================
     // CREATE APPLICATION
-    // =====================================================
-
     const application = new JobApplication({
       jobName,
       name,
@@ -78,10 +65,7 @@ const createJobOpening = async (req, res) => {
       status: "Pending",
     });
 
-    // =====================================================
-    // SAVE
-    // =====================================================
-
+    // SAVE TO MONGODB
     await application.save();
 
     res.status(201).json({
@@ -89,7 +73,6 @@ const createJobOpening = async (req, res) => {
       message: "Job application submitted successfully",
       application,
     });
-
   } catch (error) {
     console.error("❌ CREATE JOB OPENING ERROR:", error);
 
@@ -101,22 +84,21 @@ const createJobOpening = async (req, res) => {
   }
 };
 
-
 // =====================================================
-// GET ALL JOB OPENINGS / APPLICATIONS
+// GET ALL APPLICATIONS
 // =====================================================
 
 const getJobOpenings = async (req, res) => {
   try {
-    const applications = await JobApplication.find()
-      .sort({ createdAt: -1 });
+    const applications = await JobApplication.find().sort({
+      createdAt: -1,
+    });
 
     res.status(200).json({
       success: true,
       count: applications.length,
       applications,
     });
-
   } catch (error) {
     console.error("❌ GET JOB OPENINGS ERROR:", error);
 
@@ -128,9 +110,8 @@ const getJobOpenings = async (req, res) => {
   }
 };
 
-
 // =====================================================
-// GET SINGLE JOB OPENING / APPLICATION
+// GET SINGLE APPLICATION
 // =====================================================
 
 const getJobOpening = async (req, res) => {
@@ -150,7 +131,6 @@ const getJobOpening = async (req, res) => {
       success: true,
       application,
     });
-
   } catch (error) {
     console.error("❌ GET JOB OPENING ERROR:", error);
 
@@ -162,102 +142,6 @@ const getJobOpening = async (req, res) => {
   }
 };
 
-
-// =====================================================
-// UPDATE JOB OPENING / APPLICATION STATUS
-// =====================================================
-
-// const updateJobOpening = async (req, res) => {
-//   try {
-//     const { status } = req.body;
-
-//     const validStatuses = [
-//       "Pending",
-//       "Reviewed",
-//       "Shortlisted",
-//       "Rejected",
-//       "Selected",
-//     ];
-
-//     if (!status || !validStatuses.includes(status)) {
-//       return res.status(400).json({
-//         success: false,
-//         message: "Invalid application status",
-//       });
-//     }
-
-//     const application =
-//       await JobApplication.findByIdAndUpdate(
-//         req.params.id,
-//         {
-//           status,
-//         },
-//         {
-//           new: true,
-//           runValidators: true,
-//         }
-//       );
-
-//     if (!application) {
-//       return res.status(404).json({
-//         success: false,
-//         message: "Job application not found",
-//       });
-//     }
-
-//     res.status(200).json({
-//       success: true,
-//       message: "Job application status updated successfully",
-//       application,
-//     });
-
-//   } catch (error) {
-//     console.error("❌ UPDATE JOB OPENING ERROR:", error);
-
-//     res.status(500).json({
-//       success: false,
-//       message: "Server error",
-//       error: error.message,
-//     });
-//   }
-// };
-
-
-// =====================================================
-// DELETE JOB OPENING / APPLICATION
-// =====================================================
-
-// const deleteJobOpening = async (req, res) => {
-//   try {
-//     const application =
-//       await JobApplication.findByIdAndDelete(
-//         req.params.id
-//       );
-
-//     if (!application) {
-//       return res.status(404).json({
-//         success: false,
-//         message: "Job application not found",
-//       });
-//     }
-
-//     res.status(200).json({
-//       success: true,
-//       message: "Job application deleted successfully",
-//     });
-
-//   } catch (error) {
-//     console.error("❌ DELETE JOB OPENING ERROR:", error);
-
-//     res.status(500).json({
-//       success: false,
-//       message: "Server error",
-//       error: error.message,
-//     });
-//   }
-// };
-
-
 // =====================================================
 // EXPORT
 // =====================================================
@@ -266,5 +150,4 @@ module.exports = {
   createJobOpening,
   getJobOpenings,
   getJobOpening,
- 
 };

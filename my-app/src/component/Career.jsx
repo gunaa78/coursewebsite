@@ -1,24 +1,14 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import api from "./axios";
-import{useEffect} from "react";
+
+import CareerJobCards from "./CareerJobCards";
 
 import {
-  Code2,
-  Server,
-  Layers,
-  Palette,
-  Smartphone,
-  Megaphone,
-  TrendingUp,
-  ShieldCheck,
-  MapPin,
   Briefcase,
-  Clock3,
+  MapPin,
+  Upload,
   ArrowRight,
- 
- 
-  ArrowUpRight,
   Users,
   Rocket,
   Lightbulb,
@@ -30,21 +20,50 @@ import {
   ChevronDown,
 } from "lucide-react";
 
+/* =========================================================
+   CAREER COMPONENT
+========================================================= */
+
 function Career() {
-    useEffect(() => {
-      window.scrollTo(0, 0);
-    }, []);
+  /* =======================================================
+     SCROLL TO TOP
+  ======================================================= */
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  /* =======================================================
+     STATES
+  ======================================================= */
+
   const [submitSuccess, setSubmitSuccess] = useState("");
   const [selectedRole, setSelectedRole] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [openFaq, setOpenFaq] = useState(null);
 
-  // =====================================================
-  // FORM DATA
-  // =====================================================
+  const [openings, setOpenings] = useState([]);
+  const [loadingOpenings, setLoadingOpenings] = useState(true);
 
-  const [formData, setFormData] = useState({
+  /*
+    ADMIN TEST MODE
 
+    true = Admin controls visible
+    false = Admin controls hidden
+
+    NOTE:
+    This is only frontend testing.
+    Production-la proper JWT/admin authentication use pannunga.
+  */
+  const [isAdmin] = useState(true);
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  /* =======================================================
+     FORM DATA
+  ======================================================= */
+
+  const initialFormData = {
     name: "",
     email: "",
     phone: "",
@@ -53,41 +72,129 @@ function Career() {
     location: "",
     resume: null,
     message: "",
-  });
+  };
 
-  // =====================================================
-  // HANDLE CHANGE
-  // =====================================================
+  const [formData, setFormData] = useState(initialFormData);
+
+  /* =======================================================
+     FETCH JOB OPENINGS
+  ======================================================= */
+
+  useEffect(() => {
+    const fetchOpenings = async () => {
+      try {
+        setLoadingOpenings(true);
+
+        const response = await api.get("/job-openings");
+
+        const data = Array.isArray(response.data)
+          ? response.data
+          : response.data?.openings || [];
+
+        setOpenings(data);
+      } catch (error) {
+        console.error("Failed to fetch job openings:", error);
+
+        setOpenings([]);
+      } finally {
+        setLoadingOpenings(false);
+      }
+    };
+
+    fetchOpenings();
+  }, []);
+
+  /* =======================================================
+     HANDLE FORM CHANGE
+  ======================================================= */
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
 
+    /* =====================================================
+       RESUME UPLOAD
+    ===================================================== */
+
+    if (name === "resume") {
+      const file = files?.[0];
+
+      if (!file) return;
+
+      /* FILE SIZE CHECK */
+
+      if (file.size > 5 * 1024 * 1024) {
+        alert("Resume size should be less than 5MB.");
+
+        e.target.value = "";
+
+        return;
+      }
+
+      /* FILE TYPE CHECK */
+
+      const allowedTypes = [
+        "application/pdf",
+        "application/msword",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      ];
+
+      if (!allowedTypes.includes(file.type)) {
+        alert("Please upload PDF, DOC or DOCX file.");
+
+        e.target.value = "";
+
+        return;
+      }
+
+      setFormData((prev) => ({
+        ...prev,
+        resume: file,
+      }));
+
+      return;
+    }
+
+    /* =====================================================
+       NORMAL INPUT
+    ===================================================== */
+
     setFormData((prev) => ({
       ...prev,
-      [name]: files ? files[0] : value,
+      [name]: value,
     }));
   };
 
-  // =====================================================
-  // CLOSE FORM
-  // =====================================================
+  /* =======================================================
+     CLOSE APPLICATION FORM
+  ======================================================= */
 
   const closeForm = () => {
     setShowForm(false);
+
     setSelectedRole(null);
+
+    setSubmitSuccess("");
+
+    setIsSubmitting(false);
+
+    setFormData(initialFormData);
   };
 
-  // =====================================================
-  // HANDLE SUBMIT
-  // =====================================================
+  /* =======================================================
+     HANDLE APPLICATION SUBMIT
+  ======================================================= */
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    /* ROLE CHECK */
 
     if (!selectedRole) {
       alert("Please select a job role.");
       return;
     }
+
+    /* RESUME CHECK */
 
     if (!formData.resume) {
       alert("Please upload your resume.");
@@ -95,166 +202,75 @@ function Career() {
     }
 
     try {
+      setIsSubmitting(true);
       setSubmitSuccess("");
 
       const data = new FormData();
 
+      /* JOB NAME */
+
       data.append("jobName", selectedRole);
+
+      /* NAME */
+
       data.append("name", formData.name);
+
+      /* EMAIL */
+
       data.append("email", formData.email);
+
+      /* PHONE */
+
       data.append("phone", formData.phone);
+
+      /* COLLEGE */
+
       data.append("college", formData.college);
+
+      /* EXPERIENCE */
+
       data.append("experience", formData.experience);
+
+      /* LOCATION */
+
       data.append("location", formData.location);
+
+      /* MESSAGE */
+
       data.append("message", formData.message);
+
+      /* RESUME */
+
       data.append("resume", formData.resume);
 
-      console.log("📤 JOB APPLICATION DATA:");
+      /* API */
 
-      for (const [key, value] of data.entries()) {
-        console.log(key, value);
-      }
+      await api.post("/job-openings/applications", data);
 
-      const response = await api.post(
-        "/job-openings/applications",
-        data
-      );
-
-      console.log("✅ API RESPONSE:", response.data);
+      /* SUCCESS */
 
       setSubmitSuccess(
         "Job Application Submitted Successfully!"
       );
 
-      // alert("Job Application Submitted Successfully! 🎉");
+      /* RESET FORM DATA */
 
-      // RESET FORM
-
-      setFormData({
-        jobName:"",
-        name: "",
-        email: "",
-        phone: "",
-        college: "",
-        experience: "",
-        location: "",
-        resume: null,
-        message: "",
-      });
-
-      closeForm();
+      setFormData(initialFormData);
     } catch (error) {
-      console.error("❌ SUBMIT ERROR:", error);
-
-      console.log(
-        "❌ ERROR RESPONSE:",
-        error.response?.data
-      );
+      console.error("SUBMIT ERROR:", error);
 
       alert(
         error.response?.data?.message ||
           "Unable to connect to server"
       );
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
-  // =====================================================
-  // JOB ROLES
-  // =====================================================
-
-  const roles = [
-    {
-      title: "Frontend Developer",
-      department: "Engineering",
-      description:
-        "Build modern and responsive web applications using React and modern frontend technologies.",
-      location: "Madurai, India",
-      type: "Full Time",
-      experience: "0–2 Years",
-      icon: Code2,
-    },
-
-    {
-      title: "Backend Developer",
-      department: "Engineering",
-      description:
-        "Develop scalable APIs, backend services and database solutions.",
-      location: "Madurai, India",
-      type: "Full Time",
-      experience: "1–3 Years",
-      icon: Server,
-    },
-
-    {
-      title: "Full Stack Developer",
-      department: "Engineering",
-      description:
-        "Build complete web applications across frontend and backend technologies.",
-      location: "Madurai, India",
-      type: "Full Time",
-      experience: "1–3 Years",
-      icon: Layers,
-    },
-
-    {
-      title: "UI/UX Designer",
-      department: "Design",
-      description:
-        "Create intuitive user experiences and modern digital interfaces.",
-      location: "Madurai, India",
-      type: "Full Time",
-      experience: "0–2 Years",
-      icon: Palette,
-    },
-
-    {
-      title: "Mobile App Developer",
-      department: "Engineering",
-      description:
-        "Develop high-quality mobile applications for Android and iOS.",
-      location: "Madurai, India",
-      type: "Full Time",
-      experience: "1–3 Years",
-      icon: Smartphone,
-    },
-
-    {
-      title: "Digital Marketing Executive",
-      department: "Marketing",
-      description:
-        "Plan and execute digital marketing campaigns and improve brand visibility.",
-      location: "Madurai, India",
-      type: "Full Time",
-      experience: "0–2 Years",
-      icon: Megaphone,
-    },
-
-    {
-      title: "Business Development Executive",
-      department: "Business",
-      description:
-        "Build client relationships and identify new business opportunities.",
-      location: "Madurai, India",
-      type: "Full Time",
-      experience: "0–2 Years",
-      icon: TrendingUp,
-    },
-
-    {
-      title: "Software Testing Engineer",
-      department: "Quality Assurance",
-      description:
-        "Test applications and ensure reliable and high-quality software.",
-      location: "Madurai, India",
-      type: "Full Time",
-      experience: "0–2 Years",
-      icon: ShieldCheck,
-    },
-  ];
-
-  // =====================================================
-  // BENEFITS
-  // =====================================================
+  /* =======================================================
+     BENEFITS
+  ======================================================= */
 
   const benefits = [
     {
@@ -289,9 +305,9 @@ function Career() {
     },
   ];
 
-  // =====================================================
-  // HIRING PROCESS
-  // =====================================================
+  /* =======================================================
+     HIRING PROCESS
+  ======================================================= */
 
   const hiringProcess = [
     {
@@ -316,9 +332,9 @@ function Career() {
     },
   ];
 
-  // =====================================================
-  // FAQ
-  // =====================================================
+  /* =======================================================
+     FAQ
+  ======================================================= */
 
   const faqs = [
     {
@@ -348,6 +364,10 @@ function Career() {
     },
   ];
 
+  /* =======================================================
+     RETURN
+  ======================================================= */
+
   return (
     <main className="bg-white text-slate-900 overflow-hidden">
 
@@ -357,58 +377,199 @@ function Career() {
 
       <section
         id="career"
-        className="relative min-h-[720px] bg-slate-950 text-white flex items-center overflow-hidden"
+        className="
+          relative
+          min-h-[720px]
+          bg-slate-950
+          text-white
+          flex
+          items-center
+          overflow-hidden
+        "
       >
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-600/20 rounded-full blur-3xl" />
 
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-indigo-600/10 rounded-full blur-3xl" />
+        {/* BACKGROUND */}
 
-        <div className="relative max-w-[1400px] mx-auto px-6 lg:px-12 w-full">
+        <div
+          className="
+            absolute
+            top-0
+            right-0
+            w-[500px]
+            h-[500px]
+            bg-blue-600/20
+            rounded-full
+            blur-3xl
+          "
+        />
 
-          <div className="grid lg:grid-cols-[1.2fr_0.8fr] gap-16 items-center">
+        <div
+          className="
+            absolute
+            bottom-0
+            left-0
+            w-[400px]
+            h-[400px]
+            bg-indigo-600/10
+            rounded-full
+            blur-3xl
+          "
+        />
+
+        <div
+          className="
+            relative
+            max-w-[1400px]
+            mx-auto
+            px-6
+            lg:px-12
+            w-full
+          "
+        >
+
+          <div
+            className="
+              grid
+              lg:grid-cols-[1.2fr_0.8fr]
+              gap-16
+              items-center
+            "
+          >
+
+            {/* HERO LEFT */}
 
             <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7 }}
+              initial={{
+                opacity: 0,
+                y: 40,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              transition={{
+                duration: 0.7,
+              }}
             >
 
-              <div className="inline-flex items-center gap-2 border border-slate-700 rounded-full px-4 py-2 text-sm text-slate-300">
-                <span className="w-2 h-2 bg-blue-500 rounded-full" />
+              <div
+                className="
+                  inline-flex
+                  items-center
+                  gap-2
+                  border
+                  border-slate-700
+                  rounded-full
+                  px-4
+                  py-2
+                  text-sm
+                  text-slate-300
+                "
+              >
+
+                <span
+                  className="
+                    w-2
+                    h-2
+                    bg-blue-500
+                    rounded-full
+                  "
+                />
+
                 We are hiring
+
               </div>
 
-              <p className="text-blue-400 uppercase tracking-[0.25em] text-sm font-semibold mt-8">
+              <p
+                className="
+                  text-blue-400
+                  uppercase
+                  tracking-[0.25em]
+                  text-sm
+                  font-semibold
+                  mt-8
+                "
+              >
                 Careers at Hikoo Technology
               </p>
 
-              <h1 className="text-5xl sm:text-7xl lg:text-8xl font-bold leading-[0.95] mt-5">
+              <h1
+                className="
+                  text-5xl
+                  sm:text-7xl
+                  lg:text-8xl
+                  font-bold
+                  leading-[0.95]
+                  mt-5
+                "
+              >
                 Build your
                 <br />
+
                 <span className="text-blue-500">
                   future
                 </span>{" "}
                 with us.
               </h1>
 
-              <p className="text-lg text-slate-400 max-w-2xl mt-8 leading-8">
-                Join a team where ideas become products, skills become
-                expertise and every challenge becomes an opportunity to grow.
+              <p
+                className="
+                  text-lg
+                  text-slate-400
+                  max-w-2xl
+                  mt-8
+                  leading-8
+                "
+              >
+                Join a team where ideas become products,
+                skills become expertise and every challenge
+                becomes an opportunity to grow.
               </p>
 
-              <div className="flex flex-wrap gap-4 mt-9">
+              <div
+                className="
+                  flex
+                  flex-wrap
+                  gap-4
+                  mt-9
+                "
+              >
 
                 <a
                   href="#roles"
-                  className="inline-flex items-center gap-3 bg-blue-600 px-7 py-4 rounded-xl font-semibold hover:bg-blue-700 transition"
+                  className="
+                    inline-flex
+                    items-center
+                    gap-3
+                    bg-blue-600
+                    px-7
+                    py-4
+                    rounded-xl
+                    font-semibold
+                    hover:bg-blue-700
+                    transition
+                  "
                 >
                   Explore Opportunities
+
                   <ArrowRight size={18} />
                 </a>
 
                 <a
                   href="#culture"
-                  className="inline-flex items-center gap-3 border border-slate-700 px-7 py-4 rounded-xl font-semibold hover:border-blue-500 transition"
+                  className="
+                    inline-flex
+                    items-center
+                    gap-3
+                    border
+                    border-slate-700
+                    px-7
+                    py-4
+                    rounded-xl
+                    font-semibold
+                    hover:border-blue-500
+                    transition
+                  "
                 >
                   Our Culture
                 </a>
@@ -417,24 +578,50 @@ function Career() {
 
             </motion.div>
 
-            {/* HERO CARD */}
+            {/* HERO RIGHT */}
 
             <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
+              initial={{
+                opacity: 0,
+                x: 50,
+              }}
+              animate={{
+                opacity: 1,
+                x: 0,
+              }}
+              transition={{
+                duration: 0.8,
+              }}
               className="hidden lg:block"
             >
 
               <div className="relative">
 
-                <div className="absolute -inset-5 bg-blue-600/20 blur-2xl rounded-3xl" />
+                <div
+                  className="
+                    absolute
+                    -inset-5
+                    bg-blue-600/20
+                    blur-2xl
+                    rounded-3xl
+                  "
+                />
 
-                <div className="relative bg-slate-900 border border-slate-800 rounded-3xl p-8">
+                <div
+                  className="
+                    relative
+                    bg-slate-900
+                    border
+                    border-slate-800
+                    rounded-3xl
+                    p-8
+                  "
+                >
 
                   <div className="flex items-center justify-between">
 
                     <div>
+
                       <p className="text-slate-500 text-sm">
                         Career Opportunity
                       </p>
@@ -442,9 +629,20 @@ function Career() {
                       <h3 className="text-2xl font-bold mt-2">
                         Find your place.
                       </h3>
+
                     </div>
 
-                    <div className="w-12 h-12 rounded-xl bg-blue-600 flex items-center justify-center">
+                    <div
+                      className="
+                        w-12
+                        h-12
+                        rounded-xl
+                        bg-blue-600
+                        flex
+                        items-center
+                        justify-center
+                      "
+                    >
                       <Briefcase size={22} />
                     </div>
 
@@ -456,11 +654,23 @@ function Career() {
 
                       <div className="flex items-center gap-4">
 
-                        <div className="w-10 h-10 rounded-xl bg-blue-600/20 text-blue-400 flex items-center justify-center">
+                        <div
+                          className="
+                            w-10
+                            h-10
+                            rounded-xl
+                            bg-blue-600/20
+                            text-blue-400
+                            flex
+                            items-center
+                            justify-center
+                          "
+                        >
                           <Rocket size={20} />
                         </div>
 
                         <div>
+
                           <p className="font-semibold">
                             Grow your skills
                           </p>
@@ -468,6 +678,7 @@ function Career() {
                           <p className="text-xs text-slate-500 mt-1">
                             Learn through real projects
                           </p>
+
                         </div>
 
                       </div>
@@ -478,11 +689,23 @@ function Career() {
 
                       <div className="flex items-center gap-4">
 
-                        <div className="w-10 h-10 rounded-xl bg-blue-600/20 text-blue-400 flex items-center justify-center">
+                        <div
+                          className="
+                            w-10
+                            h-10
+                            rounded-xl
+                            bg-blue-600/20
+                            text-blue-400
+                            flex
+                            items-center
+                            justify-center
+                          "
+                        >
                           <Users size={20} />
                         </div>
 
                         <div>
+
                           <p className="font-semibold">
                             Work together
                           </p>
@@ -490,6 +713,7 @@ function Career() {
                           <p className="text-xs text-slate-500 mt-1">
                             Collaborate with talented people
                           </p>
+
                         </div>
 
                       </div>
@@ -504,9 +728,16 @@ function Career() {
 
                       <a
                         href="#roles"
-                        className="inline-flex items-center gap-2 mt-3 font-semibold"
+                        className="
+                          inline-flex
+                          items-center
+                          gap-2
+                          mt-3
+                          font-semibold
+                        "
                       >
                         View openings
+
                         <ArrowRight size={16} />
                       </a>
 
@@ -523,6 +754,7 @@ function Career() {
           </div>
 
         </div>
+
       </section>
 
       {/* =====================================================
@@ -537,13 +769,30 @@ function Career() {
 
             <div>
 
-              <p className="text-blue-600 text-sm uppercase tracking-[0.2em] font-semibold">
+              <p
+                className="
+                  text-blue-600
+                  text-sm
+                  uppercase
+                  tracking-[0.2em]
+                  font-semibold
+                "
+              >
                 Why Hikoo
               </p>
 
-              <h2 className="text-4xl md:text-6xl font-bold mt-4 leading-tight">
+              <h2
+                className="
+                  text-4xl
+                  md:text-6xl
+                  font-bold
+                  mt-4
+                  leading-tight
+                "
+              >
                 More than a job.
                 <br />
+
                 <span className="text-blue-600">
                   A place to grow.
                 </span>
@@ -551,16 +800,32 @@ function Career() {
 
             </div>
 
-            <p className="text-lg text-slate-500 leading-8 max-w-xl">
-              We believe great products are built by people who are curious,
-              motivated and willing to learn. At Hikoo Technology, you get
-              opportunities to work on meaningful projects while developing
-              your career.
+            <p
+              className="
+                text-lg
+                text-slate-500
+                leading-8
+                max-w-xl
+              "
+            >
+              We believe great products are built by
+              people who are curious, motivated and willing
+              to learn. At Hikoo Technology, you get
+              opportunities to work on meaningful projects
+              while developing your career.
             </p>
 
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mt-14">
+          <div
+            className="
+              grid
+              md:grid-cols-2
+              lg:grid-cols-3
+              gap-5
+              mt-14
+            "
+          >
 
             {benefits.map((item, index) => {
 
@@ -569,17 +834,49 @@ function Career() {
               return (
                 <motion.div
                   key={item.title}
-                  initial={{ opacity: 0, y: 25 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
+                  initial={{
+                    opacity: 0,
+                    y: 25,
+                  }}
+                  whileInView={{
+                    opacity: 1,
+                    y: 0,
+                  }}
+                  viewport={{
+                    once: true,
+                  }}
                   transition={{
                     duration: 0.5,
                     delay: index * 0.05,
                   }}
-                  className="group border border-slate-200 rounded-2xl p-7 hover:border-blue-300 hover:shadow-xl transition-all duration-300"
+                  className="
+                    group
+                    border
+                    border-slate-200
+                    rounded-2xl
+                    p-7
+                    hover:border-blue-300
+                    hover:shadow-xl
+                    transition-all
+                    duration-300
+                  "
                 >
 
-                  <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition">
+                  <div
+                    className="
+                      w-12
+                      h-12
+                      rounded-xl
+                      bg-blue-50
+                      text-blue-600
+                      flex
+                      items-center
+                      justify-center
+                      group-hover:bg-blue-600
+                      group-hover:text-white
+                      transition
+                    "
+                  >
                     <Icon size={22} />
                   </div>
 
@@ -593,7 +890,6 @@ function Career() {
 
                 </motion.div>
               );
-
             })}
 
           </div>
@@ -617,31 +913,64 @@ function Career() {
 
             <div>
 
-              <p className="text-blue-400 text-sm uppercase tracking-[0.2em] font-semibold">
+              <p
+                className="
+                  text-blue-400
+                  text-sm
+                  uppercase
+                  tracking-[0.2em]
+                  font-semibold
+                "
+              >
                 Our Culture
               </p>
 
-              <h2 className="text-4xl md:text-6xl font-bold mt-4 leading-tight">
+              <h2
+                className="
+                  text-4xl
+                  md:text-6xl
+                  font-bold
+                  mt-4
+                  leading-tight
+                "
+              >
                 Learn.
                 <br />
                 Create.
                 <br />
+
                 <span className="text-blue-500">
                   Make an impact.
                 </span>
               </h2>
 
-              <p className="text-slate-400 text-lg leading-8 mt-7 max-w-xl">
-                We create an environment where people can share ideas,
-                experiment with new technologies and take ownership of
-                their work.
+              <p
+                className="
+                  text-slate-400
+                  text-lg
+                  leading-8
+                  mt-7
+                  max-w-xl
+                "
+              >
+                We create an environment where people
+                can share ideas, experiment with new
+                technologies and take ownership of their work.
               </p>
 
             </div>
 
             <div className="grid sm:grid-cols-2 gap-4">
 
-              <div className="bg-slate-900 border border-slate-800 rounded-2xl p-7">
+              <div
+                className="
+                  bg-slate-900
+                  border
+                  border-slate-800
+                  rounded-2xl
+                  p-7
+                "
+              >
 
                 <Coffee
                   className="text-blue-500"
@@ -653,12 +982,21 @@ function Career() {
                 </h3>
 
                 <p className="text-slate-500 mt-3 leading-6">
-                  Work with people who support learning and collaboration.
+                  Work with people who support learning
+                  and collaboration.
                 </p>
 
               </div>
 
-              <div className="bg-slate-900 border border-slate-800 rounded-2xl p-7">
+              <div
+                className="
+                  bg-slate-900
+                  border
+                  border-slate-800
+                  rounded-2xl
+                  p-7
+                "
+              >
 
                 <Lightbulb
                   className="text-blue-500"
@@ -670,12 +1008,21 @@ function Career() {
                 </h3>
 
                 <p className="text-slate-500 mt-3 leading-6">
-                  Share ideas and turn creative thinking into solutions.
+                  Share ideas and turn creative thinking
+                  into solutions.
                 </p>
 
               </div>
 
-              <div className="bg-slate-900 border border-slate-800 rounded-2xl p-7">
+              <div
+                className="
+                  bg-slate-900
+                  border
+                  border-slate-800
+                  rounded-2xl
+                  p-7
+                "
+              >
 
                 <Building2
                   className="text-blue-500"
@@ -687,7 +1034,8 @@ function Career() {
                 </h3>
 
                 <p className="text-slate-500 mt-3 leading-6">
-                  Develop skills that help you move forward in your career.
+                  Develop skills that help you move forward
+                  in your career.
                 </p>
 
               </div>
@@ -701,7 +1049,8 @@ function Career() {
                 </h3>
 
                 <p className="text-blue-100 mt-3 leading-6">
-                  Build solutions that solve real business problems.
+                  Build solutions that solve real business
+                  problems.
                 </p>
 
               </div>
@@ -723,308 +1072,14 @@ function Career() {
         className="py-24 bg-slate-50"
       >
 
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
-
-          <div>
-
-            <p className="text-blue-600 text-sm uppercase tracking-[0.2em] font-semibold">
-              Open Positions
-            </p>
-
-            <h2 className="text-4xl md:text-6xl font-bold mt-4">
-              Find your{" "}
-              <span className="text-blue-600">
-                next role.
-              </span>
-            </h2>
-
-            <p className="text-slate-500 text-lg mt-6 max-w-2xl">
-              Explore our current opportunities and find the role
-              that matches your skills and career goals.
-            </p>
-
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
-
-            {roles.map((role, index) => {
-
-              const Icon = role.icon;
-
-              return (
-                <motion.div
-                  key={role.title}
-                  initial={{
-                    opacity: 0,
-                    y: 25,
-                  }}
-                  whileInView={{
-                    opacity: 1,
-                    y: 0,
-                  }}
-                  viewport={{
-                    once: true,
-                  }}
-                  transition={{
-                    duration: 0.5,
-                    delay: index * 0.06,
-                  }}
-                  className="
-                    group
-                    relative
-                    bg-white
-                    border
-                    border-slate-200
-                    rounded-2xl
-                    p-6
-                    overflow-hidden
-                    hover:shadow-2xl
-                    hover:-translate-y-2
-                    transition-all
-                    duration-500
-                  "
-                >
-
-                  <div
-                    className="
-                      absolute
-                      -right-16
-                      -top-16
-                      w-40
-                      h-40
-                      rounded-full
-                      bg-blue-50
-                      group-hover:bg-blue-100
-                      group-hover:scale-150
-                      transition-all
-                      duration-700
-                    "
-                  />
-
-                  <div className="relative flex items-center justify-between">
-
-                    <div
-                      className="
-                        w-14
-                        h-14
-                        rounded-xl
-                        bg-blue-50
-                        text-blue-600
-                        flex
-                        items-center
-                        justify-center
-                        group-hover:bg-blue-600
-                        group-hover:text-white
-                        group-hover:rotate-6
-                        group-hover:scale-105
-                        transition-all
-                        duration-300
-                      "
-                    >
-
-                      <Icon
-                        size={25}
-                        strokeWidth={1.8}
-                      />
-
-                    </div>
-
-                    <span
-                      className="
-                        text-xs
-                        font-semibold
-                        text-slate-400
-                        uppercase
-                        tracking-widest
-                      "
-                    >
-                      Open Role
-                    </span>
-
-                  </div>
-
-                  <div className="relative mt-7">
-
-                    <p
-                      className="
-                        text-blue-600
-                        text-xs
-                        font-bold
-                        uppercase
-                        tracking-[0.18em]
-                      "
-                    >
-                      {role.department}
-                    </p>
-
-                    <h3
-                      className="
-                        text-2xl
-                        font-bold
-                        text-slate-900
-                        mt-2
-                        group-hover:text-blue-600
-                        transition-colors
-                        duration-300
-                      "
-                    >
-                      {role.title}
-                    </h3>
-
-                    <p
-                      className="
-                        text-sm
-                        text-slate-500
-                        leading-6
-                        mt-4
-                        line-clamp-3
-                      "
-                    >
-                      {role.description}
-                    </p>
-
-                  </div>
-
-                  <div
-                    className="
-                      relative
-                      mt-6
-                      flex
-                      flex-wrap
-                      gap-2
-                    "
-                  >
-
-                    <span
-                      className="
-                        inline-flex
-                        items-center
-                        gap-2
-                        bg-slate-50
-                        border
-                        border-slate-100
-                        rounded-full
-                        px-3
-                        py-2
-                        text-xs
-                        text-slate-600
-                      "
-                    >
-                      <MapPin
-                        size={14}
-                        className="text-blue-600"
-                      />
-
-                      {role.location}
-                    </span>
-
-                    <span
-                      className="
-                        inline-flex
-                        items-center
-                        gap-2
-                        bg-slate-50
-                        border
-                        border-slate-100
-                        rounded-full
-                        px-3
-                        py-2
-                        text-xs
-                        text-slate-600
-                      "
-                    >
-                      <Briefcase
-                        size={14}
-                        className="text-blue-600"
-                      />
-
-                      {role.type}
-                    </span>
-
-                    <span
-                      className="
-                        inline-flex
-                        items-center
-                        gap-2
-                        bg-slate-50
-                        border
-                        border-slate-100
-                        rounded-full
-                        px-3
-                        py-2
-                        text-xs
-                        text-slate-600
-                      "
-                    >
-                      <Clock3
-                        size={14}
-                        className="text-blue-600"
-                      />
-
-                      {role.experience}
-                    </span>
-
-                  </div>
-
-                  <div
-                    className="
-                      relative
-                      mt-7
-                      pt-5
-                      border-t
-                      border-slate-100
-                      flex
-                      items-center
-                      justify-between
-                    "
-                  >
-
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setSelectedRole(role.title);
-                        setShowForm(true);
-                        setSubmitSuccess("");
-                      }}
-                      className="
-                        font-semibold
-                        text-slate-900
-                        group-hover:text-blue-600
-                        transition-colors
-                      "
-                    >
-                      Apply Now
-                    </button>
-
-                    <div
-                      className="
-                        w-10
-                        h-10
-                        rounded-full
-                        bg-slate-100
-                        flex
-                        items-center
-                        justify-center
-                        text-slate-600
-                        group-hover:bg-blue-600
-                        group-hover:text-white
-                        group-hover:translate-x-1
-                        transition-all
-                        duration-300
-                      "
-                    >
-                      <ArrowUpRight size={18} />
-                    </div>
-
-                  </div>
-
-                </motion.div>
-              );
-            })}
-
-          </div>
-
-        </div>
+        <CareerJobCards
+          openings={openings}
+          loadingOpenings={loadingOpenings}
+          setSelectedRole={setSelectedRole}
+          setShowForm={setShowForm}
+          setSubmitSuccess={setSubmitSuccess}
+          isAdmin={isAdmin}
+        />
 
       </section>
 
@@ -1032,181 +1087,214 @@ function Career() {
           HOW WE HIRE
       ===================================================== */}
 
-      <section className="relative py-32 bg-white overflow-hidden">
+      <section
+        className="
+          relative
+          py-32
+          bg-white
+          overflow-hidden
+        "
+      >
 
-        <div className="absolute inset-0 pointer-events-none">
-
-          <div className="absolute -top-40 left-1/4 w-[500px] h-[500px] bg-blue-500/[0.06] rounded-full blur-[120px]" />
-
-          <div className="absolute top-1/2 -right-40 w-[450px] h-[450px] bg-indigo-500/[0.06] rounded-full blur-[120px]" />
-
-          <div className="absolute -bottom-40 left-10 w-[400px] h-[400px] bg-sky-500/[0.05] rounded-full blur-[120px]" />
-
-        </div>
-
-        <div className="relative max-w-[1250px] mx-auto px-6">
+        <div className="max-w-[1250px] mx-auto px-6">
 
           <div className="max-w-3xl mx-auto text-center">
 
-            <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-slate-50 border border-slate-200 shadow-sm">
+            <div
+              className="
+                inline-flex
+                items-center
+                gap-3
+                px-4
+                py-2
+                rounded-full
+                bg-slate-50
+                border
+                border-slate-200
+              "
+            >
 
               <span className="relative flex h-2.5 w-2.5">
 
-                <span className="absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-50 animate-ping" />
+                <span
+                  className="
+                    absolute
+                    inline-flex
+                    h-full
+                    w-full
+                    rounded-full
+                    bg-blue-400
+                    opacity-50
+                    animate-ping
+                  "
+                />
 
-                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-blue-600" />
+                <span
+                  className="
+                    relative
+                    inline-flex
+                    h-2.5
+                    w-2.5
+                    rounded-full
+                    bg-blue-600
+                  "
+                />
 
               </span>
 
-              <span className="text-blue-600 text-xs font-bold uppercase tracking-[0.22em]">
+              <span
+                className="
+                  text-blue-600
+                  text-xs
+                  font-bold
+                  uppercase
+                  tracking-[0.22em]
+                "
+              >
                 Recruitment Process
               </span>
 
             </div>
 
-            <h2 className="mt-7 text-5xl sm:text-6xl lg:text-7xl font-bold tracking-[-0.04em] leading-[0.95] text-slate-950">
-
+            <h2
+              className="
+                mt-7
+                text-5xl
+                sm:text-6xl
+                lg:text-7xl
+                font-bold
+                leading-[0.95]
+              "
+            >
               How we
 
               <span className="block text-blue-600">
                 hire.
               </span>
-
             </h2>
 
-            <p className="mt-7 text-base sm:text-lg text-slate-500 leading-8 max-w-2xl mx-auto">
-
-              A transparent and thoughtful hiring journey designed to
-              understand your skills, mindset and potential at every step.
-
+            <p
+              className="
+                mt-7
+                text-base
+                sm:text-lg
+                text-slate-500
+                leading-8
+                max-w-2xl
+                mx-auto
+              "
+            >
+              A transparent and thoughtful hiring journey
+              designed to understand your skills, mindset
+              and potential at every step.
             </p>
 
           </div>
 
-          <div className="relative mt-24">
+          <div
+            className="
+              grid
+              grid-cols-1
+              sm:grid-cols-2
+              lg:grid-cols-4
+              gap-6
+              mt-20
+            "
+          >
 
-            <div className="hidden lg:block absolute top-[62px] left-[8%] right-[8%] h-px bg-gradient-to-r from-transparent via-blue-200 to-transparent" />
+            {hiringProcess.map((item, index) => (
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-
-              {hiringProcess.map((item, index) => (
+              <div
+                key={item.number}
+                className="group"
+              >
 
                 <div
-                  key={item.number}
-                  className="group relative"
+                  className="
+                    w-[124px]
+                    h-[124px]
+                    mx-auto
+                    rounded-full
+                    bg-white
+                    border
+                    border-slate-200
+                    shadow-lg
+                    flex
+                    items-center
+                    justify-center
+                    group-hover:-translate-y-2
+                    transition
+                  "
                 >
 
-                  <div className="relative z-20 flex justify-center mb-10">
+                  <div
+                    className="
+                      w-[78px]
+                      h-[78px]
+                      rounded-full
+                      bg-slate-950
+                      flex
+                      items-center
+                      justify-center
+                      group-hover:bg-blue-600
+                      transition
+                    "
+                  >
 
-                    <div className="relative w-[124px] h-[124px] rounded-full bg-white border border-slate-200 shadow-[0_20px_60px_rgba(15,23,42,0.08)] flex items-center justify-center transition-all duration-500 group-hover:border-blue-300 group-hover:shadow-[0_25px_70px_rgba(37,99,235,0.18)] group-hover:-translate-y-2">
-
-                      <div className="absolute inset-2 rounded-full border border-dashed border-blue-200 group-hover:border-blue-400 group-hover:rotate-180 transition-all duration-700" />
-
-                      <div className="relative w-[78px] h-[78px] rounded-full bg-slate-950 flex items-center justify-center shadow-xl transition-all duration-500 group-hover:bg-blue-600">
-
-                        <span className="text-white text-xl font-bold tracking-wide">
-                          {item.number}
-                        </span>
-
-                      </div>
-
-                      <div className="absolute bottom-1 right-2 w-6 h-6 rounded-full bg-white border border-slate-200 flex items-center justify-center shadow-sm">
-
-                        <div className="w-2 h-2 rounded-full bg-blue-600 group-hover:scale-125 transition" />
-
-                      </div>
-
-                    </div>
-
-                  </div>
-
-                  <div className="relative min-h-[285px] rounded-[2rem] bg-white border border-slate-200 p-8 overflow-hidden shadow-[0_10px_40px_rgba(15,23,42,0.04)] transition-all duration-500 group-hover:-translate-y-3 group-hover:border-blue-200 group-hover:shadow-[0_25px_70px_rgba(15,23,42,0.10)]">
-
-                    <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-blue-500 via-indigo-500 to-blue-400 opacity-0 group-hover:opacity-100 transition" />
-
-                    <span className="absolute -right-4 -top-8 text-[120px] leading-none font-black text-slate-50 select-none group-hover:text-blue-50 transition-colors duration-500">
+                    <span
+                      className="
+                        text-white
+                        text-xl
+                        font-bold
+                      "
+                    >
                       {item.number}
                     </span>
 
-                    <div className="relative">
-
-                      <div className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-blue-600">
-
-                        <span className="w-5 h-px bg-blue-600" />
-
-                        Step {index + 1}
-
-                      </div>
-
-                      <h3 className="mt-6 text-2xl font-bold tracking-tight text-slate-950 group-hover:text-blue-600 transition-colors">
-                        {item.title}
-                      </h3>
-
-                      <p className="mt-4 text-sm text-slate-500 leading-7 max-w-[260px]">
-                        {item.text}
-                      </p>
-
-                      <div className="absolute -bottom-8 left-0 flex items-center gap-2 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-
-                        <span className="text-xs font-semibold text-blue-600">
-                          Next step
-                        </span>
-
-                        <ArrowRight
-                          size={14}
-                          className="text-blue-600"
-                        />
-
-                      </div>
-
-                    </div>
-
                   </div>
-
-                  {index !== hiringProcess.length - 1 && (
-
-                    <div className="hidden lg:flex absolute top-[62px] -right-[15px] z-30 w-8 h-8 rounded-full bg-white border border-blue-100 shadow-lg items-center justify-center">
-
-                      <ArrowRight
-                        size={15}
-                        className="text-blue-600 group-hover:translate-x-1 transition"
-                      />
-
-                    </div>
-
-                  )}
 
                 </div>
 
-              ))}
+                <div
+                  className="
+                    mt-8
+                    min-h-[220px]
+                    rounded-[2rem]
+                    bg-white
+                    border
+                    border-slate-200
+                    p-8
+                    shadow-sm
+                    group-hover:-translate-y-2
+                    transition
+                  "
+                >
 
-            </div>
+                  <span
+                    className="
+                      text-xs
+                      font-bold
+                      uppercase
+                      tracking-[0.2em]
+                      text-blue-600
+                    "
+                  >
+                    Step {index + 1}
+                  </span>
 
-          </div>
+                  <h3 className="mt-5 text-2xl font-bold">
+                    {item.title}
+                  </h3>
 
-          <div className="mt-20 flex justify-center">
+                  <p className="mt-4 text-sm text-slate-500 leading-7">
+                    {item.text}
+                  </p>
 
-            <div className="inline-flex items-center gap-4 px-6 py-4 rounded-2xl bg-slate-950 text-white shadow-xl shadow-slate-900/10">
-
-              <div className="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center">
-
-                <span className="text-sm font-bold">
-                  ✓
-                </span>
+                </div>
 
               </div>
 
-              <p className="text-sm text-slate-300">
-
-                We believe in hiring
-
-                <span className="text-white font-semibold ml-1">
-                  people, not just resumes.
-                </span>
-
-              </p>
-
-            </div>
+            ))}
 
           </div>
 
@@ -1224,11 +1312,26 @@ function Career() {
 
           <div className="text-center">
 
-            <p className="text-blue-600 text-sm uppercase tracking-[0.2em] font-semibold">
+            <p
+              className="
+                text-blue-600
+                text-sm
+                uppercase
+                tracking-[0.2em]
+                font-semibold
+              "
+            >
               FAQ
             </p>
 
-            <h2 className="text-4xl md:text-6xl font-bold mt-4">
+            <h2
+              className="
+                text-4xl
+                md:text-6xl
+                font-bold
+                mt-4
+              "
+            >
               Frequently asked questions
             </h2>
 
@@ -1241,17 +1344,36 @@ function Career() {
               const isOpen = openFaq === index;
 
               return (
+
                 <div
                   key={faq.question}
-                  className="bg-white border border-slate-200 rounded-2xl overflow-hidden"
+                  className="
+                    bg-white
+                    border
+                    border-slate-200
+                    rounded-2xl
+                    overflow-hidden
+                  "
                 >
 
                   <button
                     type="button"
                     onClick={() =>
-                      setOpenFaq(isOpen ? null : index)
+                      setOpenFaq(
+                        isOpen
+                          ? null
+                          : index
+                      )
                     }
-                    className="w-full flex items-center justify-between gap-5 p-6 text-left"
+                    className="
+                      w-full
+                      flex
+                      items-center
+                      justify-between
+                      gap-5
+                      p-6
+                      text-left
+                    "
                   >
 
                     <span className="font-semibold text-lg">
@@ -1260,11 +1382,15 @@ function Career() {
 
                     <ChevronDown
                       size={20}
-                      className={`shrink-0 transition-transform ${
-                        isOpen
-                          ? "rotate-180 text-blue-600"
-                          : ""
-                      }`}
+                      className={`
+                        shrink-0
+                        transition-transform
+                        ${
+                          isOpen
+                            ? "rotate-180 text-blue-600"
+                            : ""
+                        }
+                      `}
                     />
 
                   </button>
@@ -1282,8 +1408,8 @@ function Career() {
                   )}
 
                 </div>
-              );
 
+              );
             })}
 
           </div>
@@ -1293,14 +1419,22 @@ function Career() {
       </section>
 
       {/* =====================================================
-          APPLICATION FORM
+          APPLICATION FORM MODAL
       ===================================================== */}
 
       {showForm && (
 
-        <div className="fixed inset-0 z-[9999] bg-slate-950/80 backdrop-blur-md">
+        <div
+          className="
+            fixed
+            inset-0
+            z-[9999]
+            bg-slate-950/80
+            backdrop-blur-md
+          "
+        >
 
-          {/* CLOSE */}
+          {/* CLOSE BUTTON */}
 
           <button
             type="button"
@@ -1322,15 +1456,26 @@ function Career() {
               shadow-xl
               hover:bg-blue-600
               hover:text-white
-              transition-all
+              transition
             "
           >
             ×
           </button>
 
+          {/* SCROLL */}
+
           <div className="h-full overflow-y-auto">
 
-            <div className="min-h-full flex items-center justify-center px-4 py-10 md:px-8">
+            <div
+              className="
+                min-h-full
+                flex
+                items-center
+                justify-center
+                px-4
+                py-10
+              "
+            >
 
               <div
                 className="
@@ -1351,8 +1496,6 @@ function Career() {
 
                 <div
                   className="
-                    relative
-                    overflow-hidden
                     bg-slate-950
                     text-white
                     p-8
@@ -1361,194 +1504,149 @@ function Career() {
                   "
                 >
 
-                  <div
-                    className="
-                      absolute
-                      -top-24
-                      -right-24
-                      w-64
-                      h-64
-                      rounded-full
-                      bg-blue-600/20
-                    "
-                  />
+                  <div className="flex items-center gap-3">
 
-                  <div className="relative z-10 h-full flex flex-col">
-
-                    <div className="flex items-center gap-3">
-
-                      <div
-                        className="
-                          w-11
-                          h-11
-                          rounded-xl
-                          bg-blue-600
-                          flex
-                          items-center
-                          justify-center
-                          font-bold
-                          text-xl
-                        "
-                      >
-                        H
-                      </div>
-
-                      <div>
-
-                        <p className="font-bold text-lg">
-                          Hikoo
-                        </p>
-
-                        <p className="text-xs text-slate-500">
-                          Technology
-                        </p>
-
-                      </div>
-
+                    <div
+                      className="
+                        w-11
+                        h-11
+                        rounded-xl
+                        bg-blue-600
+                        flex
+                        items-center
+                        justify-center
+                        font-bold
+                        text-xl
+                      "
+                    >
+                      H
                     </div>
 
-                    <div className="mt-16">
+                    <div>
 
-                      <p
-                        className="
-                          text-blue-400
-                          text-xs
-                          uppercase
-                          tracking-[0.25em]
-                          font-semibold
-                        "
-                      >
-                        You're almost there
+                      <p className="font-bold text-lg">
+                        Hikoo
                       </p>
 
-                      <h2
-                        className="
-                          text-4xl
-                          md:text-5xl
-                          font-bold
-                          leading-tight
-                          mt-5
-                        "
-                      >
-                        Start your
-                        <br />
-                        <span className="text-blue-500">
-                          next chapter.
-                        </span>
-                      </h2>
-
-                      <p
-                        className="
-                          text-slate-400
-                          text-sm
-                          leading-7
-                          mt-6
-                        "
-                      >
-                        Tell us about yourself and take the
-                        first step towards joining our growing team.
+                      <p className="text-xs text-slate-500">
+                        Technology
                       </p>
 
                     </div>
 
-                    <div className="mt-12">
+                  </div>
 
-                      <p
-                        className="
-                          text-xs
-                          uppercase
-                          tracking-widest
-                          text-slate-500
-                        "
-                      >
-                        Applying for
-                      </p>
+                  <div className="mt-16">
 
-                      <div
-                        className="
-                          mt-3
-                          rounded-2xl
-                          border
-                          border-slate-800
-                          bg-slate-900
-                          p-5
-                        "
-                      >
+                    <p
+                      className="
+                        text-blue-400
+                        text-xs
+                        uppercase
+                        tracking-[0.25em]
+                        font-semibold
+                      "
+                    >
+                      You're almost there
+                    </p>
 
-                        <div className="flex items-start gap-4">
+                    <h2
+                      className="
+                        text-4xl
+                        md:text-5xl
+                        font-bold
+                        leading-tight
+                        mt-5
+                      "
+                    >
+                      Start your
+                      <br />
 
-                          <div
-                            className="
-                              w-11
-                              h-11
-                              rounded-xl
-                              bg-blue-600/20
-                              text-blue-400
-                              flex
-                              items-center
-                              justify-center
-                              shrink-0
-                            "
-                          >
-                            <Briefcase size={20} />
-                          </div>
+                      <span className="text-blue-500">
+                        next chapter.
+                      </span>
+                    </h2>
 
-                          <div>
+                    <p
+                      className="
+                        text-slate-400
+                        text-sm
+                        leading-7
+                        mt-6
+                      "
+                    >
+                      Tell us about yourself and take
+                      the first step towards joining our
+                      growing team.
+                    </p>
 
-                            <p className="font-semibold">
-                              {selectedRole}
-                            </p>
+                  </div>
 
-                            <div
-                              className="
-                                flex
-                                items-center
-                                gap-2
-                                text-xs
-                                text-slate-500
-                                mt-2
-                              "
-                            >
-                              <MapPin size={13} />
-                              Madurai, India
-                            </div>
+                  <div className="mt-12">
 
-                          </div>
+                    <p
+                      className="
+                        text-xs
+                        uppercase
+                        tracking-widest
+                        text-slate-500
+                      "
+                    >
+                      Applying for
+                    </p>
 
-                        </div>
+                    <div
+                      className="
+                        mt-3
+                        rounded-2xl
+                        border
+                        border-slate-800
+                        bg-slate-900
+                        p-5
+                      "
+                    >
 
-                      </div>
-
-                    </div>
-
-                    <div className="mt-auto pt-12">
-
-                      <div
-                        className="
-                          flex
-                          items-center
-                          gap-3
-                          text-sm
-                          text-slate-400
-                        "
-                      >
+                      <div className="flex items-start gap-4">
 
                         <div
                           className="
-                            w-8
-                            h-8
-                            rounded-full
-                            bg-blue-600
+                            w-11
+                            h-11
+                            rounded-xl
+                            bg-blue-600/20
+                            text-blue-400
                             flex
                             items-center
                             justify-center
-                            text-white
                           "
                         >
-                          ✓
+                          <Briefcase size={20} />
                         </div>
 
-                        Your information is secure
+                        <div>
+
+                          <p className="font-semibold">
+                            {selectedRole || "Selected Position"}
+                          </p>
+
+                          <div
+                            className="
+                              flex
+                              items-center
+                              gap-2
+                              text-xs
+                              text-slate-500
+                              mt-2
+                            "
+                          >
+
+                            <MapPin size={13} />
+
+                            Madurai, India
+
+                          </div>
+
+                        </div>
 
                       </div>
 
@@ -1626,13 +1724,15 @@ function Career() {
                         leading-6
                       "
                     >
-                      Complete the form below and our team
-                      will review your application.
+                      Complete the form below and our
+                      team will review your application.
                     </p>
 
                   </div>
 
-                  {/* FORM */}
+                  {/* =================================================
+                      FORM
+                  ================================================= */}
 
                   <form
                     onSubmit={handleSubmit}
@@ -1642,7 +1742,13 @@ function Career() {
 
                     {/* PERSONAL INFORMATION */}
 
-                    <div className="grid md:grid-cols-2 gap-6">
+                    <div
+                      className="
+                        grid
+                        md:grid-cols-2
+                        gap-6
+                      "
+                    >
 
                       {/* NAME */}
 
@@ -1773,7 +1879,14 @@ function Career() {
 
                     <div>
 
-                      <div className="flex items-center gap-3 mb-6">
+                      <div
+                        className="
+                          flex
+                          items-center
+                          gap-3
+                          mb-6
+                        "
+                      >
 
                         <span
                           className="
@@ -1806,7 +1919,13 @@ function Career() {
 
                       </div>
 
-                      <div className="grid md:grid-cols-2 gap-6">
+                      <div
+                        className="
+                          grid
+                          md:grid-cols-2
+                          gap-6
+                        "
+                      >
 
                         {/* EXPERIENCE */}
 
@@ -1903,7 +2022,14 @@ function Career() {
 
                     <div>
 
-                      <div className="flex items-center gap-3 mb-6">
+                      <div
+                        className="
+                          flex
+                          items-center
+                          gap-3
+                          mb-6
+                        "
+                      >
 
                         <span
                           className="
@@ -1956,7 +2082,7 @@ function Career() {
                           type="file"
                           name="resume"
                           accept=".pdf,.doc,.docx"
-                          required
+                          required={!formData.resume}
                           onChange={handleChange}
                           className="hidden"
                         />
@@ -1974,7 +2100,7 @@ function Career() {
                             mx-auto
                           "
                         >
-                          <ArrowUpRight size={22} />
+                          <Upload size={22} />
                         </div>
 
                         <p
@@ -2007,7 +2133,14 @@ function Career() {
 
                     <div>
 
-                      <div className="flex items-center gap-3 mb-6">
+                      <div
+                        className="
+                          flex
+                          items-center
+                          gap-3
+                          mb-6
+                        "
+                      >
 
                         <span
                           className="
@@ -2069,8 +2202,20 @@ function Career() {
 
                     {submitSuccess && (
 
-                      <div className="rounded-xl bg-green-50 border border-green-200 px-5 py-4 text-sm font-semibold text-green-700">
-                        {submitSuccess}
+                      <div
+                        className="
+                          rounded-xl
+                          bg-green-50
+                          border
+                          border-green-200
+                          px-5
+                          py-4
+                          text-sm
+                          font-semibold
+                          text-green-700
+                        "
+                      >
+                        ✓ {submitSuccess}
                       </div>
 
                     )}
@@ -2104,6 +2249,7 @@ function Career() {
 
                       <button
                         type="submit"
+                        disabled={isSubmitting}
                         className="
                           group
                           w-full
@@ -2123,15 +2269,25 @@ function Career() {
                           hover:-translate-y-0.5
                           hover:shadow-xl
                           transition-all
+                          disabled:opacity-60
+                          disabled:cursor-not-allowed
+                          disabled:hover:translate-y-0
                         "
                       >
 
-                        Submit Job Application
+                        {isSubmitting
+                          ? "Submitting..."
+                          : "Submit Job Application"}
 
-                        <ArrowRight
-                          size={18}
-                          className="group-hover:translate-x-1 transition"
-                        />
+                        {!isSubmitting && (
+                          <ArrowRight
+                            size={18}
+                            className="
+                              group-hover:translate-x-1
+                              transition
+                            "
+                          />
+                        )}
 
                       </button>
 
@@ -2140,11 +2296,6 @@ function Career() {
                   </form>
 
                 </div>
-                {submitSuccess && (
-  <p className="text-green-600 font-semibold text-center mt-4">
-    ✓ {submitSuccess}
-  </p>
-)}
 
               </div>
 

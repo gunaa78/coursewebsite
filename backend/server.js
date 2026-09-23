@@ -1,33 +1,44 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const cors = require("cors");
-require("dotenv").config();
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import mongoose from "mongoose";
+
+/* =========================================================
+   ROUTES
+========================================================= */
+
+// import authRoutes from "./routes/authRoutes.js";
+
+import collegeInternshipRoutes from "./routes/collegeInternshipRoutes.js";
+
+import jobInternshipRoutes from "./routes/jobInternshipRoutes.js";
+
+import jobOpeningRoutes from "./routes/jobOpeningRoutes.js";
+
+import Contactroutes from "./routes/ContactRoute.js";
+
+import jobOpeningRoutesss from "./routes/jobOpeningRoutess.js";
+
+// import customJobCardRoutes from "./routes/customJobCardRoutes.js";
 
 
-// ==============================
-// ROUTES
-// ==============================
+/* =========================================================
+   DOTENV
+========================================================= */
 
-const collegeInternshipRoutes =
-  require("./routes/collegeInternshipRoutes");
-
-const jobInternshipRoutes =
-  require("./routes/jobInternshipRoutes");
-  const jobOpeningRoutes = require("./routes/jobOpeningRoutes");
-
-  const Contactroutes = require("./routes/ContactRoute");
+dotenv.config();
 
 
-// ==============================
-// APP
-// ==============================
+/* =========================================================
+   APP
+========================================================= */
 
 const app = express();
 
 
-// ==============================
-// MIDDLEWARE
-// ==============================
+/* =========================================================
+   MIDDLEWARE
+========================================================= */
 
 app.use(cors());
 
@@ -40,31 +51,19 @@ app.use(
 );
 
 
-// ==============================
-// UPLOADS
-// ==============================
+/* =========================================================
+   AUTH
+========================================================= */
 
 // app.use(
-//   "/uploads",
-//   express.static("uploads")
+//   "/api/auth",
+//   authRoutes
 // );
 
 
-// ==============================
-// HOME
-// ==============================
-
-app.get("/", (req, res) => {
-  res.json({
-    message:
-      "College & Job Internship Backend API Running",
-  });
-});
-
-
-// ==============================
-// COLLEGE INTERNSHIP
-// ==============================
+/* =========================================================
+   COLLEGE INTERNSHIP
+========================================================= */
 
 app.use(
   "/api/college-internships",
@@ -72,9 +71,9 @@ app.use(
 );
 
 
-// ==============================
-// JOB INTERNSHIP
-// ==============================
+/* =========================================================
+   JOB INTERNSHIP
+========================================================= */
 
 app.use(
   "/api/job-internships",
@@ -82,7 +81,9 @@ app.use(
 );
 
 
-
+/* =========================================================
+   JOB APPLICATIONS
+========================================================= */
 
 app.use(
   "/api/job-openings/applications",
@@ -90,35 +91,76 @@ app.use(
 );
 
 
-
+/* =========================================================
+   CONTACT
+========================================================= */
 
 app.use(
   "/api/contact",
-   Contactroutes
-)
+  Contactroutes
+);
 
 
-// ==============================
-// PORT
-// ==============================
+/* =========================================================
+   JOB OPENINGS
+========================================================= */
 
-const PORT = process.env.PORT || 5000;
+app.use(
+  "/api/job-openings",
+  jobOpeningRoutesss
+);
 
 
-// ==============================
-// MONGODB
-// ==============================
+/* =========================================================
+   CUSTOM JOB CARDS
+========================================================= */
+
+// app.use(
+//   "/api/custom-job-cards",
+//   customJobCardRoutes
+// );
+
+
+/* =========================================================
+   HOME / TEST
+========================================================= */
+
+app.get(
+  "/",
+  (req, res) => {
+    res.status(200).json({
+      success: true,
+      message:
+        "Hikoo Backend API Running",
+    });
+  }
+);
+
+
+/* =========================================================
+   DATABASE + SERVER
+========================================================= */
+
+const PORT =
+  process.env.PORT || 5000;
 
 mongoose
-  .connect(process.env.MONGO_URI)
+  .connect(
+    process.env.MONGO_URI
+  )
   .then(() => {
-    console.log("✅ MongoDB Connected");
+    console.log(
+      "✅ MongoDB Connected"
+    );
 
-    app.listen(PORT, () => {
-      console.log(
-        `🚀 Server Running on http://localhost:${PORT}`
-      );
-    });
+    app.listen(
+      PORT,
+      () => {
+        console.log(
+          `🚀 Server Running on http://localhost:${PORT}`
+        );
+      }
+    );
   })
   .catch((error) => {
     console.error(

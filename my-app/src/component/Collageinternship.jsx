@@ -1878,7 +1878,7 @@ function Collageinternship() {
 
       {/* FINAL CTA */}
 
-      <div className="bg-gray-950 text-white py-20 px-6">
+      {/* <div className="bg-gray-950 text-white py-20 px-6">
 
         <div className="max-w-4xl mx-auto text-center">
 
@@ -1914,7 +1914,7 @@ function Collageinternship() {
 
         </div>
 
-      </div>
+      </div> */}
 
     </section>
 

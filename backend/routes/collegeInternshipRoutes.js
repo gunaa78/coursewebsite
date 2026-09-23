@@ -1,12 +1,12 @@
-const express = require("express");
-const router = express.Router();
+import express from "express";
+import upload from "../middleware/upload.js";
 
-const {
+import {
   createCollegeInternship,
   getCollegeInternships,
-} = require("../controllers/collegeInternshipController");
+} from "../controllers/collegeInternshipController.js";
 
-const upload = require("../middleware/upload");
+const router = express.Router();
 
 router.post(
   "/",
@@ -14,6 +14,9 @@ router.post(
   createCollegeInternship
 );
 
-router.get("/", getCollegeInternships);
+router.get(
+  "/",
+  getCollegeInternships
+);
 
-module.exports = router;
+export default router;

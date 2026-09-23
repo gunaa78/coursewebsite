@@ -71,7 +71,7 @@ data.append("message", formData.message);
     }
 
     const response = await api.post(
-      "/job-internships",
+      "/api/job-internships",
       data
     );
 

@@ -46,7 +46,7 @@ function Contact() {
   e.preventDefault();
 
   try {
-    const response = await api.post("/contact", {
+    const response = await api.post("/api/contact", {
       name: formData.name,
       email: formData.email,
       phone: formData.phone,

@@ -90,7 +90,7 @@ function Collageinternship() {
     }
 
     const response = await api.post(
-      "/college-internships",
+      "/api/college-internships",
       data
     );
 

@@ -245,7 +245,7 @@ function Career() {
 
       /* API */
 
-      await api.post("/job-openings/applications", data);
+      await api.post("/api/job-openings/applications", data);
 
       /* SUCCESS */
 

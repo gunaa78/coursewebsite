@@ -61,4 +61,4 @@ const jobOpeningSchema = new mongoose.Schema(
 module.exports = mongoose.model(
   "JobOpening",
   jobOpeningSchema
-);
+);n

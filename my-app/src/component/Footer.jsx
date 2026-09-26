@@ -131,21 +131,44 @@ function Footer() {
                 Home
               </button>
 
-              <button
-                  type="button"
-                    onClick={() => goHomeSection("courses")}
+              <Link
+                 to="/Courses#courses"
+                onClick={() => {
+    setTimeout(() => {
+      const element = document.getElementById("courses");
+
+      if (element) {
+        element.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+    }, 100);
+  }}
                 className="block text-slate-300 hover:text-blue-500 transition"
               >
                 Courses
-              </button>
+              </Link>
 
-              <button
+              <Link
                  type="button"
-                    onClick={() => goHomeSection("services")}
+                    to="/services#services"
+                onClick={() => {
+    setTimeout(() => {
+      const element = document.getElementById("services");
+
+      if (element) {
+        element.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+    }, 100);
+  }}
                 className="block text-slate-300 hover:text-blue-500 transition"
               >
                 Services
-              </button>
+              </Link>
 
               <button
               type="button"

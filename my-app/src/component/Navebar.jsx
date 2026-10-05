@@ -162,7 +162,11 @@ const Navbar = () => {
                   />
 
                 </div> */}
-              <img src="IMAGE.png" alt="IMAGE" className="w-12 h-12 rounded-xl" />
+           <img
+  src="IMAGE.png"
+  alt="Hikoo Technology logo"
+  className="w-12 h-12 rounded-xl"
+/>
 
                 <div className="leading-none">
 

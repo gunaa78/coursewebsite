@@ -1,6 +1,12 @@
 import { Link } from "react-router-dom";
+// import { useEffect } from "react";
 function Home() {
+  //  useEffect(() => {
+  //   document.title = "Home";
+  // }, [])
   return (
+
+     
     <section
       id="home"
       className="

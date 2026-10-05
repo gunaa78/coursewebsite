@@ -1,3 +1,4 @@
+// import { useEffect } from "react";
 const benefits = [
   {
     number: "01",
@@ -27,6 +28,9 @@ const benefits = [
 
 
 function WhyHikoo() {
+  // useEffect(() => {
+  //     document.title = "Why Hikoo";
+  //   }, [])
   
    
   
@@ -44,6 +48,7 @@ function WhyHikoo() {
         <div className="max-w-3xl">
 
           <p
+           
             className="
               text-xs
               sm:text-sm

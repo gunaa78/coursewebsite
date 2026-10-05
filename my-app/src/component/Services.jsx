@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 const services = [
   {
     number: "01",
@@ -61,7 +62,11 @@ const services = [
   },
 ];
 
+
 function Services() {
+  useEffect(() => {
+        document.title = "Services | Web Development, Software & Digital Services";
+      }, [])
   return (
     <section
       id="services"
@@ -72,7 +77,7 @@ function Services() {
         {/* ================= HEADER ================= */}
 
         <div className="max-w-3xl">
-
+ 
           <p className="text-sm font-bold tracking-[0.2em] text-blue-600">
             BEYOND COURSES
           </p>

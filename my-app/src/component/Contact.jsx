@@ -20,6 +20,10 @@ import {
 
 
 function Contact() {
+
+   useEffect(() => {
+          document.title = "Contact | Get in Touch with Our Team";
+        }, [])
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);

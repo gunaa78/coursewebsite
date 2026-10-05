@@ -122,7 +122,7 @@ const Navbar = () => {
                 className="flex items-center gap-3 shrink-0 group"
               >
 
-                <div
+                {/* <div
                   className="
                     relative
                     w-11
@@ -161,7 +161,8 @@ const Navbar = () => {
                     "
                   />
 
-                </div>
+                </div> */}
+              <img src="IMAGE.png" alt="IMAGE" className="w-12 h-12 rounded-xl" />
 
                 <div className="leading-none">
 
@@ -218,7 +219,12 @@ const Navbar = () => {
 
                   <button
                     type="button"
-                    onClick={() => goHomeSection("home")}
+                    onClick={() => {
+                       goHomeSection("home")
+                       document.title = " Hikoo Technology | IT Solutions, Training & Careers";}}
+
+
+                       
                     className="
                       relative
                       px-3.5
@@ -288,7 +294,10 @@ const Navbar = () => {
                   
              
                     type="button"
-                    onClick={() => goHomeSection("why")}
+                   onClick={() => {
+    goHomeSection("why");
+    document.title = "Why Us | Trusted Technology & Digital Solutions";
+  }}
                     className="
                       px-3.5
                       py-2.5

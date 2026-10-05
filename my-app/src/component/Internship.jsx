@@ -6,6 +6,9 @@ import InternshipApplication from "./InternshipApplication";
 import Collageinternship from "./Collageinternship";
 
 function Internship() {
+   useEffect(() => {
+          document.title = "Internship | Career Opportunities & Professional Training";
+        }, [])
 
    useEffect(() => {
     window.scrollTo(0, 0);

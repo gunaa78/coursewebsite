@@ -1,4 +1,5 @@
 import courseCategories from "./courseCategories";
+import { useEffect } from "react";
 import { useState } from "react";
 import courseDetails from "./courseDetails";
 // import { useRef } from "react";
@@ -20,6 +21,9 @@ import {
 } from "lucide-react";
 
 function Courses() {
+  useEffect(() => {
+      document.title = "Courses | IT Courses & Training Programs  | Placement Support in Madurai";
+    }, [])
   const courseDescriptions = {
   "Generative AI (Gen AI)":
     "Learn how modern generative AI systems create text, images, code and other content using advanced AI models.",

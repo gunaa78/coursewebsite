@@ -1,7 +1,10 @@
 import { useState } from "react";
 import api from "./axios";
 
+
 function Collageinternship() {
+
+ 
   const [submitSuccess, setSubmitSuccess] = useState("");
   const [formData, setFormData] = useState({
     name: "",

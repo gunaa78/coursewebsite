@@ -1,6 +1,12 @@
 import React from "react";
 // import { BookOpen, ChevronRight } from "lucide-react";
 import { useState } from "react";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+
+
+
+
 function Block(){
     const courseTopics = {
   "Generative AI (Gen AI)": [
@@ -2127,6 +2133,20 @@ function Block(){
 };
 
   const [selectedCourse, setSelectedCourse] = useState(null);
+ 
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash === "#hi") {
+      setTimeout(() => {
+        document.getElementById("hi")?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }, 100);
+          }
+  }, [location]);
+  
     return(
         <div>
             

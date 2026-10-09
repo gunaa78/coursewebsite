@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 import InternshipApplication from "./InternshipApplication";
 import Collageinternship from "./Collageinternship";
@@ -25,6 +26,17 @@ function Internship() {
     "Real-World",
     "Experience",
   ];
+ const location = useLocation();
+   useEffect(() => {
+      if (location.hash === "#intern") {
+        setTimeout(() => {
+          document.getElementById("internship")?.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+        }, 300);
+            }
+    }, [location]);
 
   return (
     <section

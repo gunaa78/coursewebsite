@@ -12,6 +12,7 @@ import Career from "./component/Career";
 import Contact from "./component/Contact";
 import Footer from "./component/Footer";
 import Collageinternship from "./component/Collageinternship";
+import Block from "./component/Block";
 function App() {
   return (
     <BrowserRouter>
@@ -53,6 +54,7 @@ function App() {
             <Route path="/intern" element={<Internship />} />
             <Route path="/Courses" element={<Courses />} />
             <Route path="/Services" element={<Services />} />
+             <Route path="/hi" element={<Block />} />
 
 
          

@@ -390,6 +390,29 @@ const Navbar = () => {
                     Contact
                   </Link>
 
+
+                   <Link
+                    to="/hi"
+                    onClick={closeMenu}
+                    className={`
+                      px-3.5
+                      py-2.5
+                      rounded-xl
+                      text-[13px]
+                      font-semibold
+                      transition-all
+                      duration-300
+
+                      ${
+                        isActive("/hi")
+                          ? "bg-blue-600 text-white shadow-md shadow-blue-600/20"
+                          : "text-gray-600 hover:text-blue-600 hover:bg-white"
+                      }
+                    `}
+                  >
+                    Block
+                  </Link>
+
                 </div>
 
               </div>

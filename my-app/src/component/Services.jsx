@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 const services = [
-  {
+  { 
     number: "01",
     title: "System Design",
     description: "Build scalable and reliable system architectures.",

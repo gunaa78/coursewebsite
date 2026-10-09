@@ -220,6 +220,18 @@ function Footer() {
               >
                  Contact
               </Link>
+
+               <Link
+                to="/hi"
+                onClick={() => {
+    document.getElementById("hi")?.scrollIntoView({
+      behavior: "smooth",
+    });
+  }}
+                className="block text-slate-300 hover:text-blue-500 transition"
+              >
+                 Block
+              </Link>
             </div>
 
           </div>

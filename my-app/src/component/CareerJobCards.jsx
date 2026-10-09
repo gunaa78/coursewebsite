@@ -504,7 +504,7 @@ const handleAdminLogin = (e) => {
                   available.
                 </p>
               </div>
-            )}
+            )} 
 
           {/* =================================================
               CARD GRID
@@ -1350,7 +1350,7 @@ const handleAdminLogin = (e) => {
           </div>
 
         </div>
-      )}
+      )} 
 
 
 

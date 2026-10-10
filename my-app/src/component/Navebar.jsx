@@ -410,7 +410,7 @@ const Navbar = () => {
                       }
                     `}
                   >
-                    Block
+                    Blog
                   </Link>
 
                 </div>
@@ -816,6 +816,28 @@ const Navbar = () => {
                   >
                     Contact
                   </Link>
+
+<Link
+                    to="/hi"
+                    onClick={closeMenu}
+                    className={`
+                      px-4
+                      py-3.5
+                      rounded-xl
+                      text-sm
+                      font-semibold
+                      transition
+
+                      ${
+                        isActive("/hi")
+                          ? "bg-blue-600 text-white"
+                          : "text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+                      }
+                    `}
+                  >
+                    Blog
+                  </Link>
+                  
 
                 </div>
 

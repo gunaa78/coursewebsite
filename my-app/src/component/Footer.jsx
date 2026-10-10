@@ -230,7 +230,7 @@ function Footer() {
   }}
                 className="block text-slate-300 hover:text-blue-500 transition"
               >
-                 Block
+                 Blog
               </Link>
             </div>
 

@@ -547,147 +547,99 @@ data.append("message", formData.message);
 
 <section
   id="apply"
-  className="relative py-24 lg:py-32 bg-slate-50 overflow-hidden"
+  className="relative w-full py-12 sm:py-16 lg:py-24 bg-slate-50 overflow-hidden"
 >
-  {/* Background decoration */}
-  <div className="absolute -top-40 -left-40 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
-  <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl" />
+  {/* Background Decorations */}
+  <div className="absolute -top-20 -left-20 sm:-top-40 sm:-left-40 w-56 h-56 sm:w-96 sm:h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
 
-  <div className="relative max-w-[1400px] mx-auto px-6 lg:px-12">
+  <div className="absolute -bottom-20 -right-20 sm:-bottom-40 sm:-right-40 w-56 h-56 sm:w-96 sm:h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
 
-    {/* ================= HEADER ================= */}
+  <div className="relative w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-12">
 
-    <div className="max-w-3xl mb-14">
-
-      <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-blue-50 border border-blue-100">
-        <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse" />
-        <span className="text-blue-600 text-xs font-bold uppercase tracking-[0.2em]">
+    {/* Header */}
+    <div className="max-w-3xl mb-8 sm:mb-12 lg:mb-14">
+      <div className="inline-flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2 rounded-full bg-blue-50 border border-blue-100">
+        <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse shrink-0" />
+        <span className="text-blue-600 text-[10px] sm:text-xs font-bold uppercase tracking-[0.15em] sm:tracking-[0.2em]">
           Join Hikoo
         </span>
       </div>
 
-      <h2 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-slate-900 mt-6 leading-tight">
-        Start your
-        <span className="text-blue-600"> internship journey.</span>
+      <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-slate-900 mt-5 sm:mt-6 leading-tight break-words">
+        Start your{" "}
+        <span className="text-blue-600">internship journey.</span>
       </h2>
 
-      <p className="text-slate-500 text-lg leading-8 mt-6 max-w-2xl">
+      <p className="text-slate-500 text-sm sm:text-base lg:text-lg leading-7 sm:leading-8 mt-4 sm:mt-6 max-w-2xl">
         Take the first step towards building your career with real-world
         projects, industry exposure, mentorship and practical experience.
       </p>
-
     </div>
 
+    {/* Main Card */}
+    <div className="grid grid-cols-1 lg:grid-cols-[360px_minmax(0,1fr)] rounded-2xl sm:rounded-3xl lg:rounded-[2rem] overflow-hidden border border-slate-200 shadow-xl bg-white min-w-0">
 
-    {/* ================= MAIN CARD ================= */}
-
-    <div className="grid lg:grid-cols-[360px_1fr] rounded-[2rem] overflow-hidden border border-slate-200 shadow-2xl bg-white">
-
-      {/* =================================================
-          LEFT INFORMATION PANEL
-      ================================================= */}
-
-      <div className="relative bg-slate-950 text-white p-8 md:p-10 lg:p-12 overflow-hidden">
-
-        {/* Decorative circles */}
-
-        <div className="absolute -top-24 -right-24 w-72 h-72 bg-blue-600/20 rounded-full blur-2xl" />
-
-        <div className="absolute -bottom-32 -left-32 w-80 h-80 bg-indigo-600/10 rounded-full blur-3xl" />
-
+      {/* Left Information Panel */}
+      <div className="relative min-w-0 bg-slate-950 text-white p-5 sm:p-8 md:p-10 lg:p-12 overflow-hidden">
+        <div className="absolute -top-24 -right-24 w-64 h-64 bg-blue-600/20 rounded-full blur-2xl pointer-events-none" />
+        <div className="absolute -bottom-32 -left-32 w-72 h-72 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative z-10">
-
-          {/* Icon */}
-
-          <div className="w-14 h-14 rounded-2xl bg-blue-600 flex items-center justify-center shadow-lg shadow-blue-600/30">
-
-            <GraduationCap size={28} />
-
+          <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-blue-600 flex items-center justify-center shadow-lg shadow-blue-600/30">
+            <GraduationCap size={26} />
           </div>
 
-
-          <p className="text-blue-400 text-xs font-bold uppercase tracking-[0.25em] mt-10">
+          <p className="text-blue-400 text-[10px] sm:text-xs font-bold uppercase tracking-[0.2em] sm:tracking-[0.25em] mt-7 sm:mt-10">
             Internship Program
           </p>
 
-
-          <h3 className="text-3xl md:text-4xl font-bold mt-4 leading-tight">
+          <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold mt-3 sm:mt-4 leading-tight">
             Build skills.
             <br />
-            <span className="text-blue-500">
-              Build your future.
-            </span>
+            <span className="text-blue-500">Build your future.</span>
           </h3>
 
-
-          <p className="text-slate-400 text-sm leading-7 mt-6">
+          <p className="text-slate-400 text-sm leading-7 mt-4 sm:mt-6">
             Join Hikoo Technology and gain practical experience by
             working on real-world projects with experienced professionals.
           </p>
 
-
-          {/* ================= BENEFITS ================= */}
-
-          <div className="mt-10 space-y-4">
-
+          {/* Benefits */}
+          <div className="mt-7 sm:mt-10 space-y-4">
             {[
               "Real-world project experience",
               "Industry expert mentorship",
               "Practical technical training",
               "Career development",
               "Collaborative environment",
-            ].map((item, index) => (
-
-              <div
-                key={item}
-                className="flex items-center gap-4"
-              >
-
+            ].map((item) => (
+              <div key={item} className="flex items-start gap-3 sm:gap-4">
                 <div className="w-8 h-8 shrink-0 rounded-full bg-blue-600/20 border border-blue-500/20 flex items-center justify-center">
-
-                  <Check
-                    size={15}
-                    className="text-blue-400"
-                  />
-
+                  <Check size={15} className="text-blue-400" />
                 </div>
-
-                <span className="text-sm text-slate-300">
+                <span className="text-sm text-slate-300 leading-6 pt-1">
                   {item}
                 </span>
-
               </div>
-
             ))}
-
           </div>
 
-
-          {/* ================= PROCESS ================= */}
-
-          <div className="mt-12 pt-8 border-t border-slate-800">
-
+          {/* Application Process */}
+          <div className="mt-9 sm:mt-12 pt-7 sm:pt-8 border-t border-slate-800">
             <p className="text-xs text-slate-500 uppercase tracking-widest font-semibold">
               Application Process
             </p>
 
-            <div className="mt-6 space-y-5">
-
+            <div className="mt-5 sm:mt-6 space-y-5">
               {[
                 "Submit Application",
                 "Application Review",
                 "Interview / Discussion",
                 "Internship Confirmation",
               ].map((step, index) => (
-
-                <div
-                  key={step}
-                  className="flex items-center gap-4"
-                >
-
+                <div key={step} className="flex items-center gap-3 sm:gap-4">
                   <div
-                    className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold ${
+                    className={`w-8 h-8 shrink-0 rounded-full flex items-center justify-center text-xs font-bold ${
                       index === 0
                         ? "bg-blue-600 text-white"
                         : "bg-slate-800 text-slate-400"
@@ -695,673 +647,450 @@ data.append("message", formData.message);
                   >
                     {index + 1}
                   </div>
-
-                  <span className="text-sm text-slate-400">
+                  <span className="text-sm text-slate-400 leading-5">
                     {step}
                   </span>
-
                 </div>
-
               ))}
-
             </div>
-
           </div>
 
-
-          {/* Bottom */}
-
-          <div className="mt-12 p-4 rounded-2xl bg-slate-900 border border-slate-800">
-
-            <div className="flex items-center gap-3">
-
-              <div className="w-9 h-9 rounded-full bg-green-500/10 flex items-center justify-center">
-
-                <ShieldCheck
-                  size={18}
-                  className="text-green-400"
-                />
-
+          {/* Privacy */}
+          <div className="mt-8 sm:mt-12 p-3 sm:p-4 rounded-2xl bg-slate-900 border border-slate-800">
+            <div className="flex items-start gap-3">
+              <div className="w-9 h-9 shrink-0 rounded-full bg-green-500/10 flex items-center justify-center">
+                <ShieldCheck size={18} className="text-green-400" />
               </div>
-
-              <div>
-
+              <div className="min-w-0">
                 <p className="text-sm font-semibold">
                   Your information is secure
                 </p>
-
-                <p className="text-xs text-slate-500 mt-1">
+                <p className="text-xs text-slate-500 mt-1 leading-5">
                   We respect your privacy.
                 </p>
-
               </div>
-
             </div>
-
           </div>
-
         </div>
-
       </div>
 
+      {/* Right Application Form */}
+      <div className="min-w-0 bg-white p-4 sm:p-7 md:p-10 lg:p-12 xl:p-14">
+        <form onSubmit={handleSubmit} className="space-y-8 sm:space-y-12 min-w-0">
 
-      {/* =================================================
-          RIGHT APPLICATION FORM
-      ================================================= */}
-
-      <div className="bg-white p-6 sm:p-10 lg:p-14">
-
-        <form
-          onSubmit={handleSubmit}
-          className="space-y-12"
-        >
-
-          {/* ================= PERSONAL ================= */}
-
-          <div>
-
-            <div className="flex items-center gap-4 mb-8">
-
-              <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold">
+          {/* 01 Personal Information */}
+          <div className="min-w-0">
+            <div className="flex items-center gap-3 sm:gap-4 mb-5 sm:mb-8">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 shrink-0 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold text-sm">
                 01
               </div>
-
-              <div>
-
-                <p className="text-xs uppercase tracking-widest font-bold text-blue-600">
+              <div className="min-w-0">
+                <p className="text-[10px] sm:text-xs uppercase tracking-widest font-bold text-blue-600">
                   Personal Information
                 </p>
-
-                <h3 className="text-2xl font-bold text-slate-900 mt-1">
+                <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mt-1">
                   Tell us about yourself
                 </h3>
-
               </div>
-
             </div>
 
-
-            <div className="grid md:grid-cols-2 gap-5">
-
-              {/* NAME */}
-
-              <div>
-
-                <label className="text-sm font-semibold text-slate-700">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+              <div className="min-w-0">
+                <label htmlFor="apply-name" className="block text-sm font-semibold text-slate-700">
                   Full Name
                 </label>
-
                 <input
+                  id="apply-name"
                   type="text"
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
                   placeholder="Enter your full name"
+                  autoComplete="name"
                   required
-                  className="mt-2 w-full rounded-xl border border-slate-200 bg-slate-50 px-5 py-4 outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition"
+                  className="mt-2 w-full min-w-0 rounded-xl border border-slate-200 bg-slate-50 px-4 sm:px-5 py-3.5 sm:py-4 text-sm sm:text-base outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition"
                 />
-
               </div>
 
-
-              {/* EMAIL */}
-
-              <div>
-
-                <label className="text-sm font-semibold text-slate-700">
+              <div className="min-w-0">
+                <label htmlFor="apply-email" className="block text-sm font-semibold text-slate-700">
                   Email Address
                 </label>
-
                 <input
+                  id="apply-email"
                   type="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="Enter your email"
+                  autoComplete="email"
                   required
-                  className="mt-2 w-full rounded-xl border border-slate-200 bg-slate-50 px-5 py-4 outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition"
+                  className="mt-2 w-full min-w-0 rounded-xl border border-slate-200 bg-slate-50 px-4 sm:px-5 py-3.5 sm:py-4 text-sm sm:text-base outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition"
                 />
-
               </div>
 
-
-              {/* PHONE */}
-
-              <div>
-
-                <label className="text-sm font-semibold text-slate-700">
+              <div className="min-w-0">
+                <label htmlFor="apply-phone" className="block text-sm font-semibold text-slate-700">
                   Phone Number
                 </label>
-
                 <input
+                  id="apply-phone"
                   type="tel"
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
                   placeholder="+91 XXXXX XXXXX"
+                  autoComplete="tel"
                   required
-                  className="mt-2 w-full rounded-xl border border-slate-200 bg-slate-50 px-5 py-4 outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition"
+                  className="mt-2 w-full min-w-0 rounded-xl border border-slate-200 bg-slate-50 px-4 sm:px-5 py-3.5 sm:py-4 text-sm sm:text-base outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition"
                 />
-
               </div>
 
-
-              {/* LOCATION */}
-
-              <div>
-
-                <label className="text-sm font-semibold text-slate-700">
+              <div className="min-w-0">
+                <label htmlFor="apply-location" className="block text-sm font-semibold text-slate-700">
                   City / Location
                 </label>
-
                 <input
+                  id="apply-location"
                   type="text"
                   name="location"
                   value={formData.location}
                   onChange={handleChange}
                   placeholder="City / Location"
+                  autoComplete="address-level2"
                   required
-                  className="mt-2 w-full rounded-xl border border-slate-200 bg-slate-50 px-5 py-4 outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition"
+                  className="mt-2 w-full min-w-0 rounded-xl border border-slate-200 bg-slate-50 px-4 sm:px-5 py-3.5 sm:py-4 text-sm sm:text-base outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition"
                 />
-
               </div>
-
             </div>
-
           </div>
 
-
-          {/* ================= EDUCATION ================= */}
-
-          <div>
-
-            <div className="flex items-center gap-4 mb-8">
-
-              <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
+          {/* 02 Education */}
+          <div className="min-w-0">
+            <div className="flex items-center gap-3 sm:gap-4 mb-5 sm:mb-8">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 shrink-0 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-sm">
                 02
               </div>
-
-              <div>
-
-                <p className="text-xs uppercase tracking-widest font-bold text-blue-600">
+              <div className="min-w-0">
+                <p className="text-[10px] sm:text-xs uppercase tracking-widest font-bold text-blue-600">
                   Education
                 </p>
-
-                <h3 className="text-2xl font-bold text-slate-900 mt-1">
+                <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mt-1">
                   Your academic background
                 </h3>
-
               </div>
-
             </div>
 
-
-            <div className="grid md:grid-cols-2 gap-5">
-
-              {/* COLLEGE */}
-
-              <div>
-
-                <label className="text-sm font-semibold text-slate-700">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+              <div className="min-w-0">
+                <label htmlFor="apply-college" className="block text-sm font-semibold text-slate-700">
                   College / University
                 </label>
-
                 <input
+                  id="apply-college"
                   type="text"
                   name="college"
                   value={formData.college}
                   onChange={handleChange}
                   placeholder="College / University"
+                  autoComplete="organization"
                   required
-                  className="mt-2 w-full rounded-xl border border-slate-200 bg-slate-50 px-5 py-4 outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition"
+                  className="mt-2 w-full min-w-0 rounded-xl border border-slate-200 bg-slate-50 px-4 sm:px-5 py-3.5 sm:py-4 text-sm sm:text-base outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition"
                 />
-
               </div>
 
-
-              {/* COURSE */}
-
-              <div>
-
-                <label className="text-sm font-semibold text-slate-700">
+              <div className="min-w-0">
+                <label htmlFor="apply-course" className="block text-sm font-semibold text-slate-700">
                   Course / Degree
                 </label>
-
                 <input
+                  id="apply-course"
                   type="text"
                   name="course"
                   value={formData.course}
                   onChange={handleChange}
                   placeholder="Course / Degree"
                   required
-                  className="mt-2 w-full rounded-xl border border-slate-200 bg-slate-50 px-5 py-4 outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition"
+                  className="mt-2 w-full min-w-0 rounded-xl border border-slate-200 bg-slate-50 px-4 sm:px-5 py-3.5 sm:py-4 text-sm sm:text-base outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition"
                 />
-
               </div>
 
-
-              {/* GRADUATION */}
-
-              <div>
-
-                <label className="text-sm font-semibold text-slate-700">
+              <div className="min-w-0">
+                <label htmlFor="apply-graduation-year" className="block text-sm font-semibold text-slate-700">
                   Graduation Year
                 </label>
-
                 <select
+                  id="apply-graduation-year"
                   name="graduationYear"
                   value={formData.graduationYear}
                   onChange={handleChange}
-                  className="mt-2 w-full rounded-xl border border-slate-200 bg-slate-50 px-5 py-4 outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition"
+                  className="mt-2 w-full min-w-0 rounded-xl border border-slate-200 bg-slate-50 px-4 sm:px-5 py-3.5 sm:py-4 text-sm sm:text-base outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition"
                 >
-
-                  <option value="">
-                    Select Year
-                  </option>
-
+                  <option value="">Select Year</option>
                   <option value="2021">2021</option>
                   <option value="2022">2022</option>
                   <option value="2023">2023</option>
                   <option value="2024">2024</option>
                   <option value="2025">2025</option>
                   <option value="2026">2026</option>
-
+                  <option value="2027">2027</option>
+                  <option value="2028">2028</option>
+                  <option value="2029">2029</option>
+                  <option value="2030">2030</option>
                 </select>
-
               </div>
 
-
-              {/* LEVEL */}
-
-              <div>
-
-                <label className="text-sm font-semibold text-slate-700">
+              <div className="min-w-0">
+                <label htmlFor="apply-education-level" className="block text-sm font-semibold text-slate-700">
                   Education Level
                 </label>
-
                 <select
+                  id="apply-education-level"
                   name="educationLevel"
                   value={formData.educationLevel}
                   onChange={handleChange}
                   required
-                  className="mt-2 w-full rounded-xl border border-slate-200 bg-slate-50 px-5 py-4 outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition"
+                  className="mt-2 w-full min-w-0 rounded-xl border border-slate-200 bg-slate-50 px-4 sm:px-5 py-3.5 sm:py-4 text-sm sm:text-base outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition"
                 >
-
-                  <option value="">
-                    Select Education Level
-                  </option>
-
-                  <option value="Diploma">
-                    Diploma
-                  </option>
-
-                  <option value="Undergraduate">
-                    Undergraduate
-                  </option>
-
-                  <option value="Postgraduate">
-                    Postgraduate
-                  </option>
-
-                  <option value="Graduate">
-                    Graduate
-                  </option>
-
+                  <option value="">Select Education Level</option>
+                  <option value="Diploma">Diploma</option>
+                  <option value="Undergraduate">Undergraduate</option>
+                  <option value="Postgraduate">Postgraduate</option>
+                  <option value="Graduate">Graduate</option>
                 </select>
-
               </div>
-
             </div>
-
           </div>
 
-
-          {/* ================= INTERNSHIP ================= */}
-
-          <div>
-
-            <div className="flex items-center gap-4 mb-8">
-
-              <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
+          {/* 03 Internship Preference */}
+          <div className="min-w-0">
+            <div className="flex items-center gap-3 sm:gap-4 mb-5 sm:mb-8">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 shrink-0 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-sm">
                 03
               </div>
-
-              <div>
-
-                <p className="text-xs uppercase tracking-widest font-bold text-blue-600">
+              <div className="min-w-0">
+                <p className="text-[10px] sm:text-xs uppercase tracking-widest font-bold text-blue-600">
                   Internship Preference
                 </p>
-
-                <h3 className="text-2xl font-bold text-slate-900 mt-1">
+                <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mt-1">
                   Choose your career path
                 </h3>
-
               </div>
-
             </div>
 
-
-            <div className="grid md:grid-cols-2 gap-5">
-
-              {/* DOMAIN */}
-
-              <div>
-
-                <label className="text-sm font-semibold text-slate-700">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+              <div className="min-w-0">
+                <label htmlFor="apply-internship" className="block text-sm font-semibold text-slate-700">
                   Internship Domain
                 </label>
-
                 <select
+                  id="apply-internship"
                   name="internship"
                   value={formData.internship}
                   onChange={handleChange}
                   required
-                  className="mt-2 w-full rounded-xl border border-slate-200 bg-slate-50 px-5 py-4 outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition"
+                  className="mt-2 w-full min-w-0 rounded-xl border border-slate-200 bg-slate-50 px-4 sm:px-5 py-3.5 sm:py-4 text-sm sm:text-base outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition"
                 >
-
-                  <option value="">
-                    Select a Domain
-                  </option>
-
-                  <option value="PHP Full Stack Developer">
-                    PHP Full Stack Developer
-                  </option>
-
-                  <option value="Java Full Stack Developer">
-                    Java Full Stack Developer
-                  </option>
-
-                  <option value="Python Full Stack Developer">
-                    Python Full Stack Developer
-                  </option>
-
-                  <option value="Full Stack Developer">
-                    Full Stack Developer
-                  </option>
-
-                  <option value="Mobile App Developer">
-                    Mobile App Developer
-                  </option>
-
-                  <option value="Android Developer">
-                    Android Developer
-                  </option>
-
-                  <option value="iOS Developer">
-                    iOS Developer
-                  </option>
-
-                  <option value="Digital Marketing Executive">
-                    Digital Marketing Executive
-                  </option>
-
-                  <option value="UI/UX Designer">
-                    UI/UX Designer
-                  </option>
-
-                  <option value="Cloud Engineer">
-                    Cloud Engineer
-                  </option>
-
-                  <option value="AI Engineer">
-                    AI Engineer
-                  </option>
-
-                  <option value="Cyber Security Engineer">
-                    Cyber Security Engineer
-                  </option>
-
-                  <option value="Data Scientist">
-                    Data Scientist
-                  </option>
-
-                  <option value="Data Analyst">
-                    Data Analyst
-                  </option>
-
-                  <option value="Software Tester">
-                    Software Tester
-                  </option>
-
-                  <option value="Game Developer">
-                    Game Developer
-                  </option>
-
-                  <option value="Other">
-                    Other
-                  </option>
-
+                  <option value="">Select a Domain</option>
+                  <option value="PHP Full Stack Developer">PHP Full Stack Developer</option>
+                  <option value="Java Full Stack Developer">Java Full Stack Developer</option>
+                  <option value="Python Full Stack Developer">Python Full Stack Developer</option>
+                  <option value="Full Stack Developer">Full Stack Developer</option>
+                  <option value="Mobile App Developer">Mobile App Developer</option>
+                  <option value="Android Developer">Android Developer</option>
+                  <option value="iOS Developer">iOS Developer</option>
+                  <option value="Digital Marketing Executive">Digital Marketing Executive</option>
+                  <option value="UI/UX Designer">UI/UX Designer</option>
+                  <option value="Cloud Engineer">Cloud Engineer</option>
+                  <option value="AI Engineer">AI Engineer</option>
+                  <option value="Cyber Security Engineer">Cyber Security Engineer</option>
+                  <option value="Data Scientist">Data Scientist</option>
+                  <option value="Data Analyst">Data Analyst</option>
+                  <option value="Software Tester">Software Tester</option>
+                  <option value="Game Developer">Game Developer</option>
+                  <option value="Other">Other</option>
                 </select>
-
               </div>
 
-
-              {/* NOTICE PERIOD */}
-
-              <div>
-
-                <label className="text-sm font-semibold text-slate-700">
+              <div className="min-w-0">
+                <label htmlFor="apply-notice-period" className="block text-sm font-semibold text-slate-700">
                   Notice Period
                 </label>
-
                 <select
+                  id="apply-notice-period"
                   name="noticePeriod"
                   value={formData.noticePeriod}
                   onChange={handleChange}
                   required
-                  className="mt-2 w-full rounded-xl border border-slate-200 bg-slate-50 px-5 py-4 outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition"
+                  className="mt-2 w-full min-w-0 rounded-xl border border-slate-200 bg-slate-50 px-4 sm:px-5 py-3.5 sm:py-4 text-sm sm:text-base outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition"
                 >
-
-                  <option value="">
-                    Select Notice period
-                  </option> 
-
-                  <option value="Immediate">
-                    Immediate
-                  </option>
-
-                  <option value="15 Days">
-                    15 Days
-                  </option>
-
-                  <option value="30 Days">
-                    30 Days
-                  </option>
-
-                  <option value="60 Days">
-                    60 Days
-                  </option>
-
-                  <option value="90 Days">
-                    90 Days
-                  </option>
-
+                  <option value="">Select Notice Period</option>
+                  <option value="Immediate">Immediate</option>
+                  <option value="15 Days">15 Days</option>
+                  <option value="30 Days">30 Days</option>
+                  <option value="60 Days">60 Days</option>
+                  <option value="90 Days">90 Days</option>
                 </select>
-
               </div>
-
             </div>
-
           </div>
 
-
-          {/* ================= ABOUT ================= */}
-
-          <div>
-
-            <div className="flex items-center gap-4 mb-8">
-
-              <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
+          {/* 04 About You */}
+          <div className="min-w-0">
+            <div className="flex items-center gap-3 sm:gap-4 mb-5 sm:mb-8">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 shrink-0 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-sm">
                 04
               </div>
-
-              <div>
-
-                <p className="text-xs uppercase tracking-widest font-bold text-blue-600">
+              <div className="min-w-0">
+                <p className="text-[10px] sm:text-xs uppercase tracking-widest font-bold text-blue-600">
                   About You
                 </p>
-
-                <h3 className="text-2xl font-bold text-slate-900 mt-1">
+                <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mt-1">
                   Tell us about your goals
                 </h3>
-
               </div>
-
             </div>
-
 
             <textarea
               name="message"
               value={formData.message}
               onChange={handleChange}
-              rows="6"
+              rows={5}
               placeholder="Tell us about yourself, your skills, interests and what you expect from this internship..."
-              className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 outline-none resize-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition"
+              className="w-full min-w-0 rounded-2xl border border-slate-200 bg-slate-50 px-4 sm:px-5 py-4 text-sm sm:text-base leading-7 outline-none resize-y focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition"
             />
-
           </div>
 
+          {/* 05 Resume Upload */}
+          <div className="min-w-0">
+            <div className="flex items-center gap-3 sm:gap-4 mb-5 sm:mb-8">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 shrink-0 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-sm">
+                05
+              </div>
+              <div className="min-w-0">
+                <p className="text-[10px] sm:text-xs uppercase tracking-widest font-bold text-blue-600">
+                  Resume
+                </p>
+                <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mt-1">
+                  Upload your resume
+                </h3>
+              </div>
+            </div>
 
-          {/* ================= RESUME ================= */}
+            <label className="group block w-full min-w-0 border-2 border-dashed border-slate-200 rounded-2xl p-5 sm:p-8 text-center cursor-pointer hover:border-blue-500 hover:bg-blue-50/30 transition">
+              <input
+                type="file"
+                name="resume"
+                accept=".pdf,.doc,.docx"
+                required
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
 
-          <div>
-  <div className="flex items-center gap-4 mb-8">
-    <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
-      05
-    </div>
+                  if (!file) return;
 
-    <div>
-      <p className="text-xs uppercase tracking-widest font-bold text-blue-600">
-        Resume
-      </p>
+                  const allowedTypes = [
+                    "application/pdf",
+                    "application/msword",
+                    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                  ];
 
-      <h3 className="text-2xl font-bold text-slate-900 mt-1">
-        Upload your resume
-      </h3>
-    </div>
-  </div>
+                  if (!allowedTypes.includes(file.type)) {
+                    alert("Please upload a PDF, DOC or DOCX file.");
+                    e.target.value = "";
+                    setFormData((prev) => ({
+                      ...prev,
+                      resume: null,
+                    }));
+                    return;
+                  }
 
-  <label className="group block border-2 border-dashed border-slate-200 rounded-2xl p-8 text-center cursor-pointer hover:border-blue-500 hover:bg-blue-50/30 transition">
+                  if (file.size > 5 * 1024 * 1024) {
+                    alert("File size must be less than 5MB.");
+                    e.target.value = "";
+                    setFormData((prev) => ({
+                      ...prev,
+                      resume: null,
+                    }));
+                    return;
+                  }
 
-    <input
-      type="file"
-      name="resume"
-      accept=".pdf,.doc,.docx"
-      onChange={(e) => {
-        const file = e.target.files[0];
+                  setFormData((prev) => ({
+                    ...prev,
+                    resume: file,
+                  }));
+                }}
+                className="hidden"
+              />
 
-        if (file) {
-          // 5MB validation
-          if (file.size > 5 * 1024 * 1024) {
-            alert("File size must be less than 5MB");
-            e.target.value = "";
+              <div className="w-12 h-12 sm:w-14 sm:h-14 mx-auto rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition">
+                <ArrowUpRight size={24} />
+              </div>
 
-            setFormData({
-              ...formData,
-              resume: null,
-            });
+              <p className="font-bold text-slate-800 text-sm sm:text-base mt-4 break-words">
+                {formData.resume
+                  ? formData.resume.name
+                  : "Click to upload your resume"}
+              </p>
 
-            return;
-          }
+              <p className="text-xs sm:text-sm text-slate-400 mt-2">
+                {formData.resume
+                  ? `${(formData.resume.size / 1024 / 1024).toFixed(2)} MB`
+                  : "PDF, DOC or DOCX • Maximum 5MB"}
+              </p>
 
-          setFormData({
-            ...formData,
-            resume: file,
-          });
-        }
-      }}
-      required
-      className="hidden"
-    />
+              {formData.resume && (
+                <p className="text-sm text-blue-600 font-semibold mt-3">
+                  ✓ Resume selected successfully
+                </p>
+              )}
+            </label>
+          </div>
 
-    <div className="w-14 h-14 mx-auto rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition">
-      <ArrowUpRight size={24} />
-    </div>
-
-    <p className="font-bold text-slate-800 mt-4">
-      {formData.resume
-        ? formData.resume.name
-        : "Click to upload your resume"}
-    </p>
-
-    <p className="text-sm text-slate-400 mt-2">
-      {formData.resume
-        ? `${(formData.resume.size / 1024 / 1024).toFixed(2)} MB`
-        : "PDF, DOC or DOCX • Maximum 5MB"}
-    </p>
-
-    {formData.resume && (
-      <p className="text-sm text-blue-600 font-semibold mt-3">
-        ✓ Resume selected successfully
-      </p>
-    )}
-  </label>
-</div>
-
-
-          {/* ================= SUBMIT ================= */}
-
-          <div className="pt-8 border-t border-slate-100">
-
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-
-              <div>
-
-                <div className="flex items-center gap-2">
-
-                  <ShieldCheck
-                    size={18}
-                    className="text-green-600"
-                  />
-
+          {/* Submit */}
+          <div className="pt-6 sm:pt-8 border-t border-slate-100">
+            <div className="flex flex-col gap-5 sm:gap-6">
+              <div className="min-w-0">
+                <div className="flex items-start gap-2">
+                  <ShieldCheck size={18} className="text-green-600 shrink-0 mt-0.5" />
                   <span className="text-sm font-semibold text-slate-700">
                     Your information is protected
                   </span>
-
                 </div>
 
-                <p className="text-xs text-slate-400 mt-2">
+                <p className="text-xs text-slate-400 mt-2 leading-5">
                   Our recruitment team will review your application.
                 </p>
-
               </div>
-
 
               <button
                 type="submit"
-                className="group w-full md:w-auto min-w-[260px] flex items-center justify-center gap-3 bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-xl font-semibold shadow-lg shadow-blue-600/20 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+                className="group w-full min-w-0 flex items-center justify-center gap-2 sm:gap-3 bg-blue-600 hover:bg-blue-700 text-white px-4 sm:px-8 py-4 rounded-xl text-sm sm:text-base font-semibold shadow-lg shadow-blue-600/20 hover:shadow-xl transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-blue-500/20"
               >
-
-                Submit Internship Application
-
-                <ArrowRight
-                  size={19}
-                  className="group-hover:translate-x-1 transition"
-                />
-
+                <span className="text-center">
+                  Submit Internship Application
+                </span>
+                <ArrowRight size={19} className="shrink-0 group-hover:translate-x-1 transition" />
               </button>
-              
-
-
             </div>
-             {submit && (
-  <p className="text-green-600 font-semibold text-center mt-4">
-    ✓ {submit}
-  </p>
-)}
 
+            {submit && (
+              <p
+                role="status"
+                aria-live="polite"
+                className="text-green-600 font-semibold text-center text-sm sm:text-base mt-5 break-words"
+              >
+                ✓ {submit}
+              </p>
+            )}
           </div>
-          
-        </form>
 
+        </form>
       </div>
-     
 
     </div>
-
   </div>
-
 </section>
+
     </section>
   );
 }

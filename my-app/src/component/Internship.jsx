@@ -5,7 +5,7 @@ import { useLocation } from "react-router-dom";
 
 import InternshipApplication from "./InternshipApplication";
 import Collageinternship from "./Collageinternship";
-import InternshipFees from "./internshipfees";
+
 
 function Internship() {
    useEffect(() => {

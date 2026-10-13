@@ -392,7 +392,7 @@ const Navbar = () => {
 
 
                    <Link
-                    to="/hi"
+                    to="/Blog#Blog"
                     onClick={closeMenu}
                     className={`
                       px-3.5
@@ -404,7 +404,7 @@ const Navbar = () => {
                       duration-300
 
                       ${
-                        isActive("/hi")
+                        isActive("/Blog")
                           ? "bg-blue-600 text-white shadow-md shadow-blue-600/20"
                           : "text-gray-600 hover:text-blue-600 hover:bg-white"
                       }
@@ -818,7 +818,7 @@ const Navbar = () => {
                   </Link>
 
 <Link
-                    to="/hi"
+                    to="/Blog"
                     onClick={closeMenu}
                     className={`
                       px-4
@@ -829,7 +829,7 @@ const Navbar = () => {
                       transition
 
                       ${
-                        isActive("/hi")
+                        isActive("/Blog")
                           ? "bg-blue-600 text-white"
                           : "text-gray-700 hover:bg-blue-50 hover:text-blue-600"
                       }

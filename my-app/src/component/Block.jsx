@@ -2137,13 +2137,13 @@ function Block(){
   const location = useLocation();
 
   useEffect(() => {
-    if (location.hash === "#hi") {
+    if (location.hash === "#Blog") {
       setTimeout(() => {
-        document.getElementById("hi")?.scrollIntoView({
+        document.getElementById("Blog")?.scrollIntoView({
           behavior: "smooth",
           block: "start",
         });
-      }, 100);
+      }, 300);
           }
   }, [location]);
   
@@ -2151,7 +2151,7 @@ function Block(){
         <div>
             
            <section 
-            id="hi"
+            id="Blog"
            className="min-h-screen bg-[#f8fafc] py-20 px-4 pt-40 ">
   <div className="max-w-7xl mx-auto">
 

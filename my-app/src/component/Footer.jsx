@@ -222,9 +222,9 @@ function Footer() {
               </Link>
 
                <Link
-                to="/hi#hi"
+                to="/Blog#Blog"
                 onClick={() => {
-    document.getElementById("hi")?.scrollIntoView({
+    document.getElementById("Blog")?.scrollIntoView({
       behavior: "smooth",
     });
   }}

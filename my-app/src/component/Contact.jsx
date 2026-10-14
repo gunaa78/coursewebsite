@@ -161,7 +161,7 @@ function Contact() {
         form.scrollIntoView({
           behavior: "smooth",
           block: "start",
-        });
+        })
       }
     }, 300);
   }
@@ -186,7 +186,7 @@ function Contact() {
 
         <div className="relative max-w-[1400px] mx-auto px-6 sm:px-8 lg:px-12">
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end">
+          `<div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end">
 
             {/* LEFT */}
 

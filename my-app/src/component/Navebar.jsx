@@ -543,27 +543,12 @@ const Navbar = () => {
                 className="flex items-center gap-3"
               >
 
-                <div
-                  className="
-                    w-10
-                    h-10
-                    rounded-xl
-                    bg-gradient-to-br
-                    from-blue-600
-                    to-indigo-700
-                    flex
-                    items-center
-                    justify-center
-                    shadow-md
-                    shadow-blue-600/20
-                  "
-                >
-
-                  <span className="text-white text-lg font-black">
-                    H
-                  </span>
-
-                </div>
+              
+                 <img
+  src="IMAGE.png"
+  alt="Hikoo Technology logo"
+  className="w-12 h-12 rounded-xl"
+/>
 
                 <div className="leading-none">
 
